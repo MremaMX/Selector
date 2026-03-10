@@ -1226,11 +1226,6 @@
   left: 4px;
 }
 
-.joia-diet-toggle-state:not(:checked) ~ .joia-diet-label-standard { opacity: 1; }
-.joia-diet-toggle-state:not(:checked) ~ .joia-diet-label-veg { opacity: 0.55; }
-.joia-diet-toggle-state:checked ~ .joia-diet-label-standard { opacity: 0.55; }
-.joia-diet-toggle-state:checked ~ .joia-diet-label-veg { opacity: 1; }
-
 .joia-diet-images {
   transition: opacity 0.35s ease;
 }
@@ -3578,11 +3573,19 @@ body.dark .filter-group-card {
       content.className = 'joia-menu-content';
       content.appendChild(renderJoiaMenu('std'));
 
+      // Initialize label opacity: ESTÁNDAR active, VEGETARIANO dimmed
+      toggleWrap.querySelector('#joiaDietLabelVeg').style.opacity = '0.55';
+
       // Add fade animation on toggle change
       toggleWrap.querySelector('#joiaDietToggle').addEventListener('change', function() {
         const isVeg = this.checked;
-        const grid = content.querySelector('.joia-menu-grid');
+        const labelStd = toggleWrap.querySelector('#joiaDietLabelStd');
+        const labelVeg = toggleWrap.querySelector('#joiaDietLabelVeg');
+        if (labelStd) labelStd.style.opacity = isVeg ? '0.55' : '1';
+        if (labelVeg) labelVeg.style.opacity = isVeg ? '1' : '0.55';
+        const grid = content.querySelector('.joia-diet-images');
         if (grid) grid.classList.add('fading');
+        // 350ms matches the CSS fade-out transition on .joia-diet-images
         setTimeout(() => {
           content.innerHTML = '';
           content.appendChild(renderJoiaMenu(isVeg ? 'veg' : 'std'));
