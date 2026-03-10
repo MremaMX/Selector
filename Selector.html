@@ -169,7 +169,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99,102,241,0.22) 0%, transparent 65%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 65%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
@@ -358,10 +358,20 @@
       justify-content:space-between;
       gap:12px;
       padding:10px 14px;
-      border-bottom:1px solid rgba(0,0,0,0.06);
-      background:transparent;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 0 rgba(0,0,0,0.04);
       position:relative;
       z-index:120;
+    }
+    body.dark .header {
+      background: rgba(18,18,24,0.82);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
     .header-left { display:flex; align-items:center; gap:10px; }
 
@@ -592,7 +602,19 @@
       isolation: isolate;
       transform: translateZ(0);
     }
-    .gallery-item:hover { transform: translateY(-6px); box-shadow: 0 28px 64px rgba(0,0,0,0.36); }
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        0 28px 64px rgba(0,0,0,0.36),
+        0 0 0 1.5px rgba(255,255,255,0.55),
+        0 0 12px 2px rgba(255,255,255,0.18);
+    }
+    body.dark .gallery-item:hover {
+      box-shadow:
+        0 28px 64px rgba(0,0,0,0.6),
+        0 0 0 1.5px rgba(255,255,255,0.40),
+        0 0 14px 3px rgba(255,255,255,0.12);
+    }
 
     .card-image { position:relative; inset:0; z-index:1; display:block; height:100%; width:100%; }
     .card-image-inner { width:100%; height:100%; overflow:hidden; border-radius:var(--card-radius); display:block; background:#111; }
@@ -639,24 +661,31 @@
     }
 
     .sort-btn {
-      padding: 5px 14px;
-      border-radius: 8px;
-      border: 1.5px solid rgba(0,0,0,0.1);
-      background: transparent;
+      padding: 7px 16px;
+      border-radius: 50px;
+      border: none;
+      background: #eaeaea;
       font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      color: var(--text);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      transition: box-shadow .15s ease, transform .12s ease;
+      color: #333;
       position: relative;
       overflow: hidden;
+      transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow:
+        0 8px 16px -4px rgba(0,0,0,0.35),
+        inset 0 -2px 3px -1px rgba(0,0,0,0.12),
+        0 -4px 8px -1px rgba(255,255,255,0.7),
+        inset 0 2px 3px -1px rgba(255,255,255,0.25),
+        inset 0 0 4px 1px rgba(255,255,255,0.6),
+        inset 0 8px 14px 0 rgba(255,255,255,0.18);
     }
 
     .sort-btn::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99,102,241,0.18) 0%, transparent 70%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 70%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
@@ -667,27 +696,77 @@
       opacity: 1;
     }
 
+    .sort-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 20px -4px rgba(0,0,0,0.38),
+        inset 0 -2px 3px -1px rgba(0,0,0,0.12),
+        0 -4px 8px -1px rgba(255,255,255,0.7),
+        inset 0 2px 3px -1px rgba(255,255,255,0.25),
+        inset 0 0 4px 1px rgba(255,255,255,0.6),
+        inset 0 8px 14px 0 rgba(255,255,255,0.18);
+    }
+
     .sort-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 2px rgba(99,102,241,0.3);
+      transform: scale(0.94);
+      box-shadow:
+        0 4px 10px -4px rgba(0,0,0,0.3),
+        inset 0 -4px 14px 1px rgba(255,255,255,0.8),
+        0 -4px 8px -1px rgba(255,255,255,0.6),
+        inset 0 4px 12px 0 rgba(0,0,0,0.25),
+        inset 0 0 6px 1px rgba(255,255,255,0.5);
     }
 
     .sort-btn.active {
-      background: rgba(99,102,241,0.1);
-      border-color: rgba(99,102,241,0.5);
+      background: #eaeaea;
       color: rgb(99,102,241);
-      box-shadow: 0 2px 8px rgba(99,102,241,0.15);
+      box-shadow:
+        0 4px 10px -4px rgba(0,0,0,0.3),
+        inset 0 -4px 14px 1px rgba(255,255,255,0.8),
+        0 -4px 8px -1px rgba(255,255,255,0.6),
+        inset 0 4px 12px 0 rgba(0,0,0,0.2),
+        inset 0 0 6px 1px rgba(255,255,255,0.5);
     }
 
     body.dark .sort-btn {
-      border-color: rgba(255,255,255,0.12);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+      background: #2a2a3a;
+      color: #e0e0ff;
+      box-shadow:
+        0 8px 16px -4px rgba(0,0,0,0.6),
+        inset 0 -2px 3px -1px rgba(0,0,0,0.32),
+        0 -4px 8px -1px rgba(80,80,110,0.22),
+        inset 0 2px 3px -1px rgba(80,80,110,0.18),
+        inset 0 0 4px 1px rgba(80,80,110,0.22),
+        inset 0 8px 14px 0 rgba(80,80,110,0.09);
+    }
+
+    body.dark .sort-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 20px -4px rgba(0,0,0,0.65),
+        inset 0 -2px 3px -1px rgba(0,0,0,0.32),
+        0 -4px 8px -1px rgba(80,80,110,0.22),
+        inset 0 2px 3px -1px rgba(80,80,110,0.18),
+        inset 0 0 4px 1px rgba(80,80,110,0.22),
+        inset 0 8px 14px 0 rgba(80,80,110,0.09);
+    }
+
+    body.dark .sort-btn:active {
+      transform: scale(0.94);
+      box-shadow:
+        0 4px 10px -4px rgba(0,0,0,0.55),
+        inset 0 -4px 14px 1px rgba(80,80,110,0.38),
+        inset 0 4px 12px 0 rgba(0,0,0,0.45),
+        inset 0 0 6px 1px rgba(80,80,110,0.28);
     }
 
     body.dark .sort-btn.active {
-      background: rgba(139,92,246,0.15);
-      border-color: rgba(139,92,246,0.5);
-      color: rgb(167,139,250);
+      color: #a5b4fc;
+      box-shadow:
+        0 4px 10px -4px rgba(0,0,0,0.55),
+        inset 0 -4px 14px 1px rgba(80,80,110,0.38),
+        inset 0 4px 12px 0 rgba(0,0,0,0.4),
+        inset 0 0 6px 1px rgba(80,80,110,0.28);
     }
 
     .overlay {
@@ -1664,7 +1743,7 @@ body.dark .filters::-webkit-scrollbar-thumb:active {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99,102,241,0.22) 0%, transparent 65%);
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 65%);
   opacity: 0;
   transition: opacity .15s ease;
   pointer-events: none;
@@ -1674,12 +1753,141 @@ body.dark .filters::-webkit-scrollbar-thumb:active {
 .group-header:hover::before, .mode-toggle:hover::before {
   opacity: 1;
 }
+body.dark .hotel-btn::before,
+body.dark .filter-btn::before,
+body.dark .type-toggle::before,
+body.dark .group-header::before,
+body.dark .mode-toggle::before,
+body.dark .sort-btn::before,
+body.dark .layout-btn::before {
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.12) 0%, transparent 65%);
+}
 
 /* Make sure text/icons stay above the spotlight layer */
 .hotel-btn > *, .filter-btn > *, .type-toggle > *,
 .group-header > *, .mode-toggle > * {
   position: relative;
   z-index: 1;
+}
+
+/* === ENV SLIDERS (darkness + blur controls) === */
+.env-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.env-slider-icon {
+  color: #555;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+body.dark .env-slider-icon {
+  color: #aaa;
+}
+
+.env-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 4px;
+  height: 80px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+/* Track */
+.env-slider::-webkit-slider-runnable-track {
+  width: 4px;
+  background: rgba(0,0,0,0.12);
+  border-radius: 999px;
+}
+body.dark .env-slider::-webkit-slider-runnable-track {
+  background: rgba(255,255,255,0.12);
+}
+.env-slider::-moz-range-track {
+  width: 4px;
+  background: rgba(0,0,0,0.12);
+  border-radius: 999px;
+}
+
+/* Thumb */
+.env-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #eaeaea;
+  cursor: pointer;
+  margin-left: -7px;
+  transition: transform 200ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms ease;
+  box-shadow:
+    0 4px 10px -2px rgba(0,0,0,0.35),
+    inset 0 -1px 2px rgba(0,0,0,0.12),
+    0 -3px 6px -1px rgba(255,255,255,0.65),
+    inset 0 1px 2px rgba(255,255,255,0.25),
+    inset 0 0 3px rgba(255,255,255,0.6);
+}
+.env-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+  box-shadow:
+    0 6px 14px -2px rgba(0,0,0,0.4),
+    inset 0 -1px 2px rgba(0,0,0,0.12),
+    0 -3px 6px -1px rgba(255,255,255,0.65),
+    inset 0 1px 2px rgba(255,255,255,0.25),
+    inset 0 0 3px rgba(255,255,255,0.6);
+}
+.env-slider:active::-webkit-slider-thumb {
+  transform: scale(0.94);
+}
+
+body.dark .env-slider::-webkit-slider-thumb {
+  background: #2a2a3a;
+  box-shadow:
+    0 4px 10px -2px rgba(0,0,0,0.6),
+    inset 0 -1px 2px rgba(0,0,0,0.32),
+    0 -3px 6px -1px rgba(80,80,110,0.2),
+    inset 0 1px 2px rgba(80,80,110,0.18),
+    inset 0 0 3px rgba(80,80,110,0.22);
+}
+body.dark .env-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+}
+
+.env-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #eaeaea;
+  cursor: pointer;
+  border: none;
+  box-shadow:
+    0 4px 10px -2px rgba(0,0,0,0.35),
+    inset 0 -1px 2px rgba(0,0,0,0.12);
+  transition: transform 200ms cubic-bezier(0.23,1,0.32,1);
+}
+
+/* === FILTER GROUP CARDS (glass wrappers for PAQUETE / LUGAR) === */
+.filter-group-card {
+  background: var(--panel-bg-light);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  padding: 4px;
+  overflow: hidden;
+}
+body.dark .filter-group-card {
+  background: var(--panel-bg-dark);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 /* === CHANGE 4: Progressive blur gradient on gallery cards === */
@@ -1737,18 +1945,22 @@ body.dark .filters::-webkit-scrollbar-thumb:active {
 
       <div class="body">
         <div class="filters" id="filtersCol">
-          <div class="group expanded" id="grp-package">
-            <div class="group-header" onclick="toggleGroup('grp-package')" role="button" aria-expanded="true" tabindex="0">
-              <div class="group-title">PAQUETE</div><div class="chev">▾</div>
+          <div class="filter-group-card">
+            <div class="group expanded" id="grp-package">
+              <div class="group-header" onclick="toggleGroup('grp-package')" role="button" aria-expanded="true" tabindex="0">
+                <div class="group-title">PAQUETE</div><div class="chev">▾</div>
+              </div>
+              <div class="group-body" id="packageFilters"></div>
             </div>
-            <div class="group-body" id="packageFilters"></div>
           </div>
 
-          <div class="group expanded" id="grp-place">
-            <div class="group-header" onclick="toggleGroup('grp-place')" role="button" aria-expanded="true" tabindex="0">
-              <div class="group-title">LUGAR</div><div class="chev">▾</div>
+          <div class="filter-group-card">
+            <div class="group expanded" id="grp-place">
+              <div class="group-header" onclick="toggleGroup('grp-place')" role="button" aria-expanded="true" tabindex="0">
+                <div class="group-title">LUGAR</div><div class="chev">▾</div>
+              </div>
+              <div class="group-body" id="placeFilters"></div>
             </div>
-            <div class="group-body" id="placeFilters"></div>
           </div>
 
         </div>
@@ -1868,6 +2080,20 @@ body.dark .filters::-webkit-scrollbar-thumb:active {
       <button type="button" id="btnZoomIn" class="layout-btn" title="Acercar zoom" aria-label="Acercar zoom">+</button>
       <span id="zoomValue" class="zoom-value" aria-live="polite" aria-label="Nivel de zoom">100%</span>
       <button type="button" id="btnZoomOut" class="layout-btn" title="Alejar zoom" aria-label="Alejar zoom">−</button>
+      <!-- Slider oscuridad -->
+      <div class="env-slider-wrap" title="Oscuridad del fondo">
+        <svg class="env-slider-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+          <path d="M12 3a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm9-7a1 1 0 0 1 0 2h-1a1 1 0 0 1 0-2h1zM4 11a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2h1zm14.95 5.536a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 1 1 1.414-1.414l.707.707zM6.464 6.464A1 1 0 0 1 5.05 7.878l-.707-.707A1 1 0 1 1 5.757 5.757l.707.707zm12.021-1.007a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM6.464 17.536l-.707.707A1 1 0 1 1 4.343 16.83l.707-.707a1 1 0 1 1 1.414 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
+        </svg>
+        <input type="range" class="env-slider" id="bgDarknessSlider" min="0" max="90" value="30" step="1" aria-label="Oscuridad del fondo">
+      </div>
+      <!-- Slider blur -->
+      <div class="env-slider-wrap" title="Blur del fondo">
+        <svg class="env-slider-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+        </svg>
+        <input type="range" class="env-slider" id="bgBlurSlider" min="0" max="20" value="5" step="1" aria-label="Blur del fondo">
+      </div>
     </div>
   </div>
 
@@ -3601,6 +3827,44 @@ body.dark .filters::-webkit-scrollbar-thumb:active {
 
   // Estado inicial
   setOpen(isOpen);
+})();
+
+// ===== ENV SLIDERS (oscuridad + blur del fondo) =====
+(function initEnvSliders() {
+  const darknessSlider = document.getElementById('bgDarknessSlider');
+  const blurSlider = document.getElementById('bgBlurSlider');
+  if (!darknessSlider || !blurSlider) return;
+
+  // Crear elemento overlay de oscuridad si no existe
+  let darknessOverlay = document.getElementById('bgDarknessOverlay');
+  if (!darknessOverlay) {
+    darknessOverlay = document.createElement('div');
+    darknessOverlay.id = 'bgDarknessOverlay';
+    darknessOverlay.style.cssText = 'position:fixed;inset:0;z-index:-2;pointer-events:none;background:rgba(0,0,0,0);transition:background 150ms ease;';
+    document.body.appendChild(darknessOverlay);
+  }
+
+  function applyDarkness(val) {
+    const opacity = (val / 100).toFixed(2);
+    darknessOverlay.style.background = `rgba(0,0,0,${opacity})`;
+  }
+
+  function applyBlur(val) {
+    let styleEl = document.getElementById('envBlurStyle');
+    if (!styleEl) {
+      styleEl = document.createElement('style');
+      styleEl.id = 'envBlurStyle';
+      document.head.appendChild(styleEl);
+    }
+    styleEl.textContent = `body::before { backdrop-filter: blur(${val}px) saturate(1.02) !important; -webkit-backdrop-filter: blur(${val}px) saturate(1.02) !important; }`;
+  }
+
+  darknessSlider.addEventListener('input', () => applyDarkness(darknessSlider.value));
+  blurSlider.addEventListener('input', () => applyBlur(blurSlider.value));
+
+  // Valores iniciales
+  applyDarkness(darknessSlider.value);
+  applyBlur(blurSlider.value);
 })();
   </script>
 </body>
