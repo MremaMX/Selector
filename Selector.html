@@ -1139,7 +1139,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 14px;
   padding-top: 14px;
 }
@@ -1150,6 +1150,9 @@
   justify-content:center;
   width:100%;
   margin-bottom: 6px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 /* ===== JOIA DIET TOGGLE ===== */
@@ -1477,7 +1480,7 @@ button:focus, .gallery-item:focus, .sort-btn:focus, .menu-btn:focus { outline: 3
 #toggleMsgGen,
 .mode-toggle {
   transition-property: background, background-color, border-color, box-shadow, color, filter, opacity;
-  transition-duration: 0.45s;
+  transition-duration: 0.15s;
   transition-timing-function: ease;
 }
 
