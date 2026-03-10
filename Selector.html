@@ -169,11 +169,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 65%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(20,184,166,0.26) 0%, rgba(56,189,248,0.12) 50%, transparent 70%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
       border-radius: inherit;
+    }
+    body.dark .layout-btn::before {
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, transparent 70%);
     }
 
     .layout-btn:hover::before { opacity: 1; }
@@ -606,14 +609,16 @@
       transform: translateY(-6px);
       box-shadow:
         0 28px 64px rgba(0,0,0,0.36),
-        0 0 0 1.5px rgba(255,255,255,0.55),
-        0 0 12px 2px rgba(255,255,255,0.18);
+        0 0 0 2px rgba(255,255,255,0.90),
+        0 0 18px 5px rgba(255,255,255,0.38),
+        0 0 36px 8px rgba(255,255,255,0.14);
     }
     body.dark .gallery-item:hover {
       box-shadow:
         0 28px 64px rgba(0,0,0,0.6),
-        0 0 0 1.5px rgba(255,255,255,0.40),
-        0 0 14px 3px rgba(255,255,255,0.12);
+        0 0 0 2px rgba(255,255,255,0.80),
+        0 0 20px 6px rgba(255,255,255,0.28),
+        0 0 40px 10px rgba(255,255,255,0.10);
     }
 
     .card-image { position:relative; inset:0; z-index:1; display:block; height:100%; width:100%; }
@@ -685,11 +690,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 70%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(20,184,166,0.28) 0%, rgba(56,189,248,0.12) 50%, transparent 75%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
       border-radius: inherit;
+    }
+    body.dark .sort-btn::before {
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, transparent 75%);
     }
 
     .sort-btn:hover::before {
@@ -1743,7 +1751,7 @@ body.dark .filters::-webkit-scrollbar-thumb:active {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 65%);
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(20,184,166,0.30) 0%, rgba(56,189,248,0.14) 50%, transparent 75%);
   opacity: 0;
   transition: opacity .15s ease;
   pointer-events: none;
@@ -1757,10 +1765,8 @@ body.dark .hotel-btn::before,
 body.dark .filter-btn::before,
 body.dark .type-toggle::before,
 body.dark .group-header::before,
-body.dark .mode-toggle::before,
-body.dark .sort-btn::before,
-body.dark .layout-btn::before {
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.12) 0%, transparent 65%);
+body.dark .mode-toggle::before {
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, transparent 75%);
 }
 
 /* Make sure text/icons stay above the spotlight layer */
@@ -2085,7 +2091,7 @@ body.dark .filter-group-card {
         <svg class="env-slider-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
           <path d="M12 3a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm9-7a1 1 0 0 1 0 2h-1a1 1 0 0 1 0-2h1zM4 11a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2h1zm14.95 5.536a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 1 1 1.414-1.414l.707.707zM6.464 6.464A1 1 0 0 1 5.05 7.878l-.707-.707A1 1 0 1 1 5.757 5.757l.707.707zm12.021-1.007a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zM6.464 17.536l-.707.707A1 1 0 1 1 4.343 16.83l.707-.707a1 1 0 1 1 1.414 1.414zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
         </svg>
-        <input type="range" class="env-slider" id="bgDarknessSlider" min="0" max="90" value="30" step="1" aria-label="Oscuridad del fondo">
+        <input type="range" class="env-slider" id="bgDarknessSlider" min="0" max="70" value="0" step="1" aria-label="Oscuridad del fondo">
       </div>
       <!-- Slider blur -->
       <div class="env-slider-wrap" title="Blur del fondo">
