@@ -408,15 +408,15 @@
     .hotel-segment .hotel-btn.active { transform:translateY(-2px); color:#fff; background:var(--accent); border-radius:94px; }
     .hotel-segment .hotel-btn[data-key="mar"].active {
       background: #da5161;
-      box-shadow: -10px 10px 21px #b34050, 10px -10px 21px #ff6272;
+      box-shadow: 0 4px 14px rgba(218, 81, 97, 0.45), 0 2px 6px rgba(218, 81, 97, 0.25);
     }
     .hotel-segment .hotel-btn[data-key="lindo"].active {
       background: #2AA59E;
-      box-shadow: -10px 10px 21px #218680, 10px -10px 21px #33c4bc;
+      box-shadow: 0 4px 14px rgba(42, 165, 158, 0.45), 0 2px 6px rgba(42, 165, 158, 0.25);
     }
     .hotel-segment .hotel-btn[data-key="joia"].active {
       background: #e1ccaa;
-      box-shadow: -10px 10px 21px #b8a789, 10px -10px 21px #ffefc9;
+      box-shadow: 0 4px 14px rgba(225, 204, 170, 0.50), 0 2px 6px rgba(225, 204, 170, 0.28);
     }
 
     .header-right { display:flex; align-items:center; gap:12px; }
@@ -1152,78 +1152,85 @@
   margin-bottom: 6px;
 }
 
-/* ===== JOIA MENU TOGGLE: ESTÁNDAR / VEGETARIANO ===== */
+/* ===== JOIA DIET TOGGLE ===== */
 .joia-diet-toggle-wrap {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   user-select: none;
 }
 
-.joia-diet-label {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  color: #fff;
-  min-width: 80px;
-  text-align: center;
-  text-transform: uppercase;
-  transition: opacity 0.3s ease;
-}
-
-.joia-diet-label.left  { text-align: right; }
-.joia-diet-label.right { text-align: left; }
-
 .joia-diet-toggle {
-  isolation: isolate;
   position: relative;
-  height: 28px;
-  width: 56px;
-  border-radius: 14px;
-  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  width: 140px;
+  height: 34px;
+  border-radius: 34px;
   cursor: pointer;
+  overflow: hidden;
   flex-shrink: 0;
-  box-shadow:
-    -4px -2px 6px 0px rgba(255,255,255,0.10),
-    4px 2px 8px 0px rgba(0,0,0,0.30),
-    2px 2px 4px 0px rgba(0,0,0,0.20) inset,
-    -2px -2px 4px 0px rgba(255,255,255,0.06) inset;
+  /* Default: ESTÁNDAR (aqua) */
+  background: linear-gradient(135deg, #2AA59E, #1d8c86);
+  box-shadow: 0 4px 14px rgba(42, 165, 158, 0.45), 0 2px 6px rgba(42, 165, 158, 0.25);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
 .joia-diet-toggle-state {
   display: none;
 }
 
-.joia-diet-indicator {
-  height: 100%;
-  width: 200%;
-  border-radius: 14px;
-  background: linear-gradient(90deg, #2563eb 0%, #3b82f6 50%, #22c55e 50%, #16a34a 100%);
-  transform: translate3d(-75%, 0, 0);
-  transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+/* When checked = VEGETARIANO (green) */
+.joia-diet-toggle:has(.joia-diet-toggle-state:checked) {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45), 0 2px 6px rgba(34, 197, 94, 0.25);
 }
 
-.joia-diet-toggle-state:checked ~ .joia-diet-indicator {
-  transform: translate3d(25%, 0, 0);
-}
-
-.joia-diet-toggle::after {
-  content: '';
+/* White knob */
+.joia-diet-toggle-knob {
   position: absolute;
   top: 4px;
-  width: 20px;
-  height: 20px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.92);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.20);
   transition: left 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
-  left: 32px;
-  pointer-events: none;
   z-index: 2;
+  pointer-events: none;
+  flex-shrink: 0;
 }
 
-.joia-diet-toggle:has(.joia-diet-toggle-state:checked)::after {
-  left: 4px;
+/* When checked: knob moves right */
+.joia-diet-toggle:has(.joia-diet-toggle-state:checked) .joia-diet-toggle-knob {
+  left: calc(100% - 30px);
+}
+
+/* Text label inside pill */
+.joia-diet-toggle-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.25s ease;
+  /* nudge text away from knob — default ESTÁNDAR: knob on left, text nudges right */
+  padding-left: 22px;
+}
+
+/* When checked (VEGETARIANO): text nudges left (away from knob on right) */
+.joia-diet-toggle:has(.joia-diet-toggle-state:checked) .joia-diet-toggle-text {
+  padding-left: 0;
+  padding-right: 22px;
 }
 
 .joia-diet-images {
@@ -1460,7 +1467,6 @@ button:focus, .gallery-item:focus, .sort-btn:focus, .menu-btn:focus { outline: 3
     button:focus, .gallery-item:focus, .sort-btn:focus, .menu-btn:focus { outline: 3px solid rgba(100,100,255,0.14); outline-offset:2px; }
 
 /* Mode transition fade */
-.panel,
 .header,
 .message-generator,
 .filter-group-card,
@@ -3561,28 +3567,24 @@ body.dark .filter-group-card {
       const toggleWrap = document.createElement('div');
       toggleWrap.className = 'joia-diet-toggle-wrap';
       toggleWrap.innerHTML = `
-        <span class="joia-diet-label left" id="joiaDietLabelStd">ESTÁNDAR</span>
-        <label class="joia-diet-toggle" title="Cambiar entre Estándar y Vegetariano">
+        <label class="joia-diet-toggle" title="Cambiar entre Estándar y Vegetariano" id="joiaDietToggleLabel">
           <input type="checkbox" class="joia-diet-toggle-state" id="joiaDietToggle">
-          <div class="joia-diet-indicator"></div>
+          <div class="joia-diet-toggle-knob"></div>
+          <span class="joia-diet-toggle-text" id="joiaDietToggleText">ESTÁNDAR</span>
         </label>
-        <span class="joia-diet-label right" id="joiaDietLabelVeg">VEGETARIANO</span>
       `;
 
       const content = document.createElement('div');
       content.className = 'joia-menu-content';
       content.appendChild(renderJoiaMenu('std'));
 
-      // Initialize label opacity: ESTÁNDAR active, VEGETARIANO dimmed
-      toggleWrap.querySelector('#joiaDietLabelVeg').style.opacity = '0.55';
-
       // Add fade animation on toggle change
       toggleWrap.querySelector('#joiaDietToggle').addEventListener('change', function() {
         const isVeg = this.checked;
-        const labelStd = toggleWrap.querySelector('#joiaDietLabelStd');
-        const labelVeg = toggleWrap.querySelector('#joiaDietLabelVeg');
-        if (labelStd) labelStd.style.opacity = isVeg ? '0.55' : '1';
-        if (labelVeg) labelVeg.style.opacity = isVeg ? '1' : '0.55';
+        const joiaDietToggleText = toggleWrap.querySelector('#joiaDietToggleText');
+        if (joiaDietToggleText) {
+          joiaDietToggleText.textContent = isVeg ? 'VEGETARIANO' : 'ESTÁNDAR';
+        }
         const grid = content.querySelector('.joia-diet-images');
         if (grid) grid.classList.add('fading');
         // 350ms matches the CSS fade-out transition on .joia-diet-images
