@@ -1439,95 +1439,135 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 0 4px;
-  opacity: 0.72;
-  transition: opacity 0.2s ease;
+  gap: 4px;
+  padding: 14px 0 6px;
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
 }
-.flip-clock:hover { opacity: 1; }
+.flip-clock:hover { opacity: 0.90; }
 
-.flip-unit {
+/* Each single-digit card */
+.fc-digit {
   position: relative;
-  width: 38px;
-  height: 50px;
+  width: 36px;
+  height: 52px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.82);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.13), 0 1px 3px rgba(0,0,0,0.08);
+  overflow: hidden;
+  perspective: 200px;
+}
+body.dark .fc-digit {
+  background: rgba(28,28,42,0.82);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.25);
 }
 
-.flip-card {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  font-size: 28px;
-  font-weight: 700;
-  font-family: 'Inter', monospace;
-  color: var(--text);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.14);
-  background: rgba(255,255,255,0.80);
-}
-body.dark .flip-card {
-  background: rgba(30,30,44,0.85);
-  color: #e0e0ff;
-}
-
-.flip-card-top,
-.flip-card-bottom,
-.flip-card-back-top,
-.flip-card-back-bottom {
+/* Top half — shows current digit top */
+.fc-upper {
   position: absolute;
-  left: 0; right: 0;
+  top: 0; left: 0; right: 0;
+  height: 50%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  padding-bottom: 1px;
+  font-size: 30px;
+  font-weight: 700;
+  font-family: 'Inter', system-ui, monospace;
+  color: #1a1a2e;
+  background: rgba(255,255,255,0.82);
+  border-radius: 7px 7px 0 0;
+  border-bottom: 1.5px solid rgba(0,0,0,0.09);
   overflow: hidden;
   backface-visibility: hidden;
+  line-height: 1;
+  user-select: none;
+}
+body.dark .fc-upper {
+  color: #dde0ff;
+  background: rgba(28,28,42,0.82);
+  border-bottom-color: rgba(255,255,255,0.07);
 }
 
-.flip-card-top,
-.flip-card-back-top {
-  top: 0;
-  height: 50%;
-  border-radius: 6px 6px 0 0;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  align-items: flex-end;
-  padding-bottom: 1px;
-}
-
-.flip-card-bottom,
-.flip-card-back-bottom {
-  bottom: 0;
-  height: 50%;
-  border-radius: 0 0 6px 6px;
-  align-items: flex-start;
-  padding-top: 1px;
-}
-
-.flip-card-back {
+/* Bottom half — shows previous digit bottom */
+.fc-lower {
   position: absolute;
-  inset: 0;
-  transform-origin: center top;
+  bottom: 0; left: 0; right: 0;
+  height: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1px;
+  font-size: 30px;
+  font-weight: 700;
+  font-family: 'Inter', system-ui, monospace;
+  color: #1a1a2e;
+  background: rgba(242,242,242,0.82);
+  border-radius: 0 0 7px 7px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  line-height: 1;
+  user-select: none;
+}
+body.dark .fc-lower {
+  color: #dde0ff;
+  background: rgba(20,20,34,0.82);
+}
+
+/* The flipping panel (top half of next digit, folds down) */
+.fc-fold {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  transform-origin: bottom center;
   transform: rotateX(0deg);
-  animation: none;
-  border-radius: 6px;
-  z-index: 2;
+  backface-visibility: hidden;
+  border-radius: 7px 7px 0 0;
+  overflow: hidden;
+  z-index: 3;
 }
-
-.flip-card-back.flipping {
-  animation: flipDown 0.35s ease-in-out forwards;
+.fc-fold.animating {
+  animation: fc-flip 0.28s ease-in forwards;
 }
-
-@keyframes flipDown {
+@keyframes fc-flip {
   0%   { transform: rotateX(0deg); }
   100% { transform: rotateX(-90deg); }
 }
 
-.flip-sep {
-  font-size: 24px;
+.fc-fold-upper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1px;
+  font-size: 30px;
   font-weight: 700;
-  color: var(--text);
-  margin-bottom: 4px;
-  opacity: 0.7;
+  font-family: 'Inter', system-ui, monospace;
+  color: #1a1a2e;
+  background: rgba(255,255,255,0.82);
+  border-bottom: 1.5px solid rgba(0,0,0,0.09);
+  line-height: 1;
+  user-select: none;
 }
-body.dark .flip-sep { color: #e0e0ff; }
+body.dark .fc-fold-upper {
+  color: #dde0ff;
+  background: rgba(28,28,42,0.82);
+  border-bottom-color: rgba(255,255,255,0.07);
+}
+
+/* Separator colon */
+.fc-sep {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: 'Inter', system-ui;
+  color: var(--text);
+  opacity: 0.5;
+  margin-bottom: 2px;
+  line-height: 1;
+  user-select: none;
+}
+body.dark .fc-sep { color: #dde0ff; }
 
 /* ========== MEDIA QUERIES - MODIFICADOS ========== */
 @media (max-width:1100px){
@@ -2367,28 +2407,19 @@ body.dark .filter-group-card {
             </div>
           </div>
 
+          <!-- ===== FLIP CLOCK HH:MM:SS ===== -->
           <div class="flip-clock" id="flipClock" aria-label="Hora actual">
-            <div class="flip-unit" id="fcHours">
-              <div class="flip-card">
-                <div class="flip-card-top" id="fcHTop"></div>
-                <div class="flip-card-bottom" id="fcHBot"></div>
-                <div class="flip-card-back">
-                  <div class="flip-card-back-top" id="fcHBackTop"></div>
-                  <div class="flip-card-back-bottom" id="fcHBackBot"></div>
-                </div>
-              </div>
-            </div>
-            <div class="flip-sep">:</div>
-            <div class="flip-unit" id="fcMinutes">
-              <div class="flip-card">
-                <div class="flip-card-top" id="fcMTop"></div>
-                <div class="flip-card-bottom" id="fcMBot"></div>
-                <div class="flip-card-back">
-                  <div class="flip-card-back-top" id="fcMBackTop"></div>
-                  <div class="flip-card-back-bottom" id="fcMBackBot"></div>
-                </div>
-              </div>
-            </div>
+            <!-- Hours -->
+            <div class="fc-digit" id="fc-h0"><div class="fc-upper" id="fc-h0-cur"></div><div class="fc-lower" id="fc-h0-prev"></div><div class="fc-fold" id="fc-h0-fold"><div class="fc-fold-upper" id="fc-h0-fold-upper"></div></div></div>
+            <div class="fc-digit" id="fc-h1"><div class="fc-upper" id="fc-h1-cur"></div><div class="fc-lower" id="fc-h1-prev"></div><div class="fc-fold" id="fc-h1-fold"><div class="fc-fold-upper" id="fc-h1-fold-upper"></div></div></div>
+            <div class="fc-sep">:</div>
+            <!-- Minutes -->
+            <div class="fc-digit" id="fc-m0"><div class="fc-upper" id="fc-m0-cur"></div><div class="fc-lower" id="fc-m0-prev"></div><div class="fc-fold" id="fc-m0-fold"><div class="fc-fold-upper" id="fc-m0-fold-upper"></div></div></div>
+            <div class="fc-digit" id="fc-m1"><div class="fc-upper" id="fc-m1-cur"></div><div class="fc-lower" id="fc-m1-prev"></div><div class="fc-fold" id="fc-m1-fold"><div class="fc-fold-upper" id="fc-m1-fold-upper"></div></div></div>
+            <div class="fc-sep">:</div>
+            <!-- Seconds -->
+            <div class="fc-digit" id="fc-s0"><div class="fc-upper" id="fc-s0-cur"></div><div class="fc-lower" id="fc-s0-prev"></div><div class="fc-fold" id="fc-s0-fold"><div class="fc-fold-upper" id="fc-s0-fold-upper"></div></div></div>
+            <div class="fc-digit" id="fc-s1"><div class="fc-upper" id="fc-s1-cur"></div><div class="fc-lower" id="fc-s1-prev"></div><div class="fc-fold" id="fc-s1-fold"><div class="fc-fold-upper" id="fc-s1-fold-upper"></div></div></div>
           </div>
 
         </div>
@@ -4336,54 +4367,80 @@ body.dark .filter-group-card {
 })();
 
 // ===== FLIP CLOCK =====
-(function initFlipClock() {
-  const fcHTop = document.getElementById('fcHTop');
-  const fcHBot = document.getElementById('fcHBot');
-  const fcHBackTop = document.getElementById('fcHBackTop');
-  const fcHBackBot = document.getElementById('fcHBackBot');
-  const fcHBack = fcHBackTop && fcHBackTop.parentElement;
+(function() {
+  function getEl(id) { return document.getElementById(id); }
 
-  const fcMTop = document.getElementById('fcMTop');
-  const fcMBot = document.getElementById('fcMBot');
-  const fcMBackTop = document.getElementById('fcMBackTop');
-  const fcMBackBot = document.getElementById('fcMBackBot');
-  const fcMBack = fcMBackTop && fcMBackTop.parentElement;
+  function setDigit(id, val) {
+    const upper = getEl(id + '-cur');
+    const lower = getEl(id + '-prev');
+    const fold  = getEl(id + '-fold');
+    const foldUpper = getEl(id + '-fold-upper');
+    if (!upper) return;
 
-  if (!fcHTop || !fcMTop) return;
+    const oldVal = upper.textContent;
+    if (oldVal === val) return; // no change, skip
 
-  let prevH = -1;
-  let prevM = -1;
+    // 1. fold shows OLD value (animates away)
+    foldUpper.textContent = oldVal;
+    fold.classList.remove('animating');
+    // force reflow
+    void fold.offsetWidth;
 
-  function pad(n) { return String(n).padStart(2, '0'); }
+    // 2. update static halves to new value immediately
+    upper.textContent = val;
+    lower.textContent = val;
 
-  function setDigit(top, bot, backTop, backBot, back, val, prevVal) {
-    const s = pad(val);
-    const ps = pad(prevVal >= 0 ? prevVal : val);
-    top.textContent = s;
-    bot.textContent = s;
-    backTop.textContent = ps;
-    backBot.textContent = s;
-    if (prevVal >= 0 && val !== prevVal) {
-      back.classList.remove('flipping');
-      void back.offsetWidth; // reflow to restart animation
-      back.classList.add('flipping');
-      const onEnd = () => { back.classList.remove('flipping'); back.removeEventListener('animationend', onEnd); };
-      back.addEventListener('animationend', onEnd);
-    }
+    // 3. trigger flip animation
+    fold.classList.add('animating');
+
+    // 4. after animation ends, hide fold panel
+    fold.addEventListener('animationend', function() {
+      fold.classList.remove('animating');
+      foldUpper.textContent = val;
+    }, { once: true });
+  }
+
+  function initDigits() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    const vals = [h[0], h[1], m[0], m[1], s[0], s[1]];
+    const ids = ['fc-h0','fc-h1','fc-m0','fc-m1','fc-s0','fc-s1'];
+    ids.forEach((id, i) => {
+      const upper = getEl(id + '-cur');
+      const lower = getEl(id + '-prev');
+      const foldUpper = getEl(id + '-fold-upper');
+      if (upper) { upper.textContent = vals[i]; }
+      if (lower) { lower.textContent = vals[i]; }
+      if (foldUpper) { foldUpper.textContent = vals[i]; }
+    });
   }
 
   function tick() {
     const now = new Date();
-    const h = now.getHours();
-    const m = now.getMinutes();
-    setDigit(fcHTop, fcHBot, fcHBackTop, fcHBackBot, fcHBack, h, prevH);
-    setDigit(fcMTop, fcMBot, fcMBackTop, fcMBackBot, fcMBack, m, prevM);
-    prevH = h;
-    prevM = m;
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+
+    setDigit('fc-h0', h[0]);
+    setDigit('fc-h1', h[1]);
+    setDigit('fc-m0', m[0]);
+    setDigit('fc-m1', m[1]);
+    setDigit('fc-s0', s[0]);
+    setDigit('fc-s1', s[1]);
   }
 
-  tick();
-  setInterval(tick, 1000);
+  // Init on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initDigits();
+      setInterval(tick, 1000);
+    });
+  } else {
+    initDigits();
+    setInterval(tick, 1000);
+  }
 })();
   </script>
 </body>
