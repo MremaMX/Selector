@@ -383,7 +383,7 @@
       display:inline-flex;
     }
     .star-logo img { width:28px; height:28px; display:block; object-fit:contain; transition: filter .5s ease, opacity .5s ease, transform 1.6s cubic-bezier(0.4,0,0.2,1); }
-    .star-logo:hover img { transform: rotate(360deg); }
+    .star-logo:hover img { transform: rotate(180deg); }
 
     .hotel-segment { display:inline-flex; gap:8px; align-items:center; }
     .hotel-segment .hotel-btn {
@@ -1142,6 +1142,8 @@
   justify-content: flex-start;
   gap: 14px;
   padding-top: 14px;
+  overflow-y: auto;
+  max-height: 82vh;
 }
 
 .joia-menu-controls {
@@ -1152,7 +1154,8 @@
   margin-bottom: 6px;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 50;
+  background: transparent;
 }
 
 /* ===== JOIA DIET TOGGLE ===== */
@@ -1431,6 +1434,101 @@
   filter: brightness(1.03) !important;
 }
 
+/* ===== FLIP CLOCK ===== */
+.flip-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 4px;
+  opacity: 0.72;
+  transition: opacity 0.2s ease;
+}
+.flip-clock:hover { opacity: 1; }
+
+.flip-unit {
+  position: relative;
+  width: 38px;
+  height: 50px;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Inter', monospace;
+  color: var(--text);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+  background: rgba(255,255,255,0.80);
+}
+body.dark .flip-card {
+  background: rgba(30,30,44,0.85);
+  color: #e0e0ff;
+}
+
+.flip-card-top,
+.flip-card-bottom,
+.flip-card-back-top,
+.flip-card-back-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-top,
+.flip-card-back-top {
+  top: 0;
+  height: 50%;
+  border-radius: 6px 6px 0 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  align-items: flex-end;
+  padding-bottom: 1px;
+}
+
+.flip-card-bottom,
+.flip-card-back-bottom {
+  bottom: 0;
+  height: 50%;
+  border-radius: 0 0 6px 6px;
+  align-items: flex-start;
+  padding-top: 1px;
+}
+
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  transform-origin: center top;
+  transform: rotateX(0deg);
+  animation: none;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+.flip-card-back.flipping {
+  animation: flipDown 0.35s ease-in-out forwards;
+}
+
+@keyframes flipDown {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+
+.flip-sep {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+body.dark .flip-sep { color: #e0e0ff; }
+
 /* ========== MEDIA QUERIES - MODIFICADOS ========== */
 @media (max-width:1100px){
   .joia-col { min-width: 280px; width: 46%; }
@@ -1480,12 +1578,12 @@ button:focus, .gallery-item:focus, .sort-btn:focus, .menu-btn:focus { outline: 3
 #toggleMsgGen,
 .mode-toggle {
   transition-property: background, background-color, border-color, box-shadow, color, filter, opacity;
-  transition-duration: 0.15s;
+  transition-duration: 0.06s;
   transition-timing-function: ease;
 }
 
 #brandLogo {
-  transition: filter 0.45s ease, opacity 0.45s ease, transform 0.9s cubic-bezier(0.4,0,0.2,1);
+  transition: filter 0.06s ease, opacity 0.06s ease, transform 0.9s cubic-bezier(0.4,0,0.2,1);
 }
 
 /* ========== GENERADOR DE MENSAJES - CORREGIDO PARA 100% ZOOM ========== */
@@ -1642,7 +1740,7 @@ body.dark .msg-gen-btn.active {
   justify-content: center;
   gap: 8px;
   position: relative;
-  overflow: hidden;
+  isolation: isolate;
 }
 
 .msg-gen-copy-btn::before {
@@ -1675,6 +1773,72 @@ body.dark .msg-gen-btn.active {
   box-shadow: 0 0 0 0px rgba(94,237,222,0.4);
   transform: translateY(8px);
   transition: 100ms;
+}
+
+/* ===== COPY BTN: ROTATING BORDER ===== */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.msg-gen-copy-btn::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 52px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    #5EEDDE, #14B8A6, #38bdf8, #5EEDDE
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.msg-gen-copy-btn:hover::after {
+  opacity: 1;
+  animation: copy-btn-rotate-border 2s linear infinite;
+}
+
+@keyframes copy-btn-rotate-border {
+  to { --angle: 360deg; }
+}
+
+/* ===== COPY BTN: WAVE LETTERS ===== */
+.msg-gen-copy-btn .wave-letter {
+  display: inline-block;
+  transition: transform 0.1s ease;
+}
+
+.msg-gen-copy-btn:hover .wave-letter {
+  animation: copy-btn-wave-up 0.6s ease infinite alternate;
+}
+
+.msg-gen-copy-btn:hover .wave-letter:nth-child(1)  { animation-delay: 0.00s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(2)  { animation-delay: 0.05s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(3)  { animation-delay: 0.10s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(4)  { animation-delay: 0.15s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(5)  { animation-delay: 0.20s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(6)  { animation-delay: 0.25s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(7)  { animation-delay: 0.30s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(8)  { animation-delay: 0.35s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(9)  { animation-delay: 0.40s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(10) { animation-delay: 0.45s; }
+.msg-gen-copy-btn:hover .wave-letter:nth-child(n+11) { animation-delay: 0.50s; }
+
+@keyframes copy-btn-wave-up {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+/* ===== COPY BTN: SENT STATE ===== */
+.msg-gen-copy-btn.sent {
+  background-color: #10b981 !important;
+  color: #fff !important;
+  letter-spacing: 1.5px !important;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5) !important;
+  pointer-events: none;
 }
 
 .msg-gen-alert {
@@ -2200,6 +2364,30 @@ body.dark .filter-group-card {
                 <div class="group-title">LUGAR</div><div class="chev">▾</div>
               </div>
               <div class="group-body" id="placeFilters"></div>
+            </div>
+          </div>
+
+          <div class="flip-clock" id="flipClock" aria-label="Hora actual">
+            <div class="flip-unit" id="fcHours">
+              <div class="flip-card">
+                <div class="flip-card-top" id="fcHTop"></div>
+                <div class="flip-card-bottom" id="fcHBot"></div>
+                <div class="flip-card-back">
+                  <div class="flip-card-back-top" id="fcHBackTop"></div>
+                  <div class="flip-card-back-bottom" id="fcHBackBot"></div>
+                </div>
+              </div>
+            </div>
+            <div class="flip-sep">:</div>
+            <div class="flip-unit" id="fcMinutes">
+              <div class="flip-card">
+                <div class="flip-card-top" id="fcMTop"></div>
+                <div class="flip-card-bottom" id="fcMBot"></div>
+                <div class="flip-card-back">
+                  <div class="flip-card-back-top" id="fcMBackTop"></div>
+                  <div class="flip-card-back-bottom" id="fcMBackBot"></div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -3958,8 +4146,21 @@ body.dark .filter-group-card {
   // Copiar mensaje
   function copyMessage() {
     const message = generateMessage();
+    const btn = document.getElementById('copyMessageBtn');
+    function showSent() {
+      if (!btn) return;
+      const savedNodes = Array.from(btn.childNodes).map(n => n.cloneNode(true));
+      btn.classList.add('sent');
+      btn.textContent = '✓ ¡Copiado!';
+      setTimeout(() => {
+        btn.classList.remove('sent');
+        btn.textContent = '';
+        savedNodes.forEach(n => btn.appendChild(n));
+      }, 1800);
+    }
     navigator.clipboard.writeText(message).then(() => {
       showAlert();
+      showSent();
     }).catch(err => {
       console.error('Error al copiar:', err);
       // Fallback para navegadores antiguos
@@ -3970,6 +4171,7 @@ body.dark .filter-group-card {
       document.execCommand('copy');
       document.body.removeChild(textarea);
       showAlert();
+      showSent();
     });
   }
 
@@ -4036,7 +4238,25 @@ body.dark .filter-group-card {
       });
     });
 
-    // Botón copiar
+    // Botón copiar — wrap letters in wave-letter spans
+    if (copyBtn) {
+      const textNodes = Array.from(copyBtn.childNodes).filter(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+      textNodes.forEach(textNode => {
+        const text = textNode.textContent.trim().replace(/\s+/g, ' ');
+        const frag = document.createDocumentFragment();
+        for (const ch of text) {
+          if (ch === ' ') {
+            frag.appendChild(document.createTextNode(' '));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'wave-letter';
+            span.textContent = ch;
+            frag.appendChild(span);
+          }
+        }
+        copyBtn.replaceChild(frag, textNode);
+      });
+    }
     copyBtn.addEventListener('click', copyMessage);
   });
 
@@ -4113,6 +4333,57 @@ body.dark .filter-group-card {
   // Valores iniciales
   applyDarkness(darknessSlider.value);
   applyBlur(blurSlider.value);
+})();
+
+// ===== FLIP CLOCK =====
+(function initFlipClock() {
+  const fcHTop = document.getElementById('fcHTop');
+  const fcHBot = document.getElementById('fcHBot');
+  const fcHBackTop = document.getElementById('fcHBackTop');
+  const fcHBackBot = document.getElementById('fcHBackBot');
+  const fcHBack = fcHBackTop && fcHBackTop.parentElement;
+
+  const fcMTop = document.getElementById('fcMTop');
+  const fcMBot = document.getElementById('fcMBot');
+  const fcMBackTop = document.getElementById('fcMBackTop');
+  const fcMBackBot = document.getElementById('fcMBackBot');
+  const fcMBack = fcMBackTop && fcMBackTop.parentElement;
+
+  if (!fcHTop || !fcMTop) return;
+
+  let prevH = -1;
+  let prevM = -1;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function setDigit(top, bot, backTop, backBot, back, val, prevVal) {
+    const s = pad(val);
+    const ps = pad(prevVal >= 0 ? prevVal : val);
+    top.textContent = s;
+    bot.textContent = s;
+    backTop.textContent = ps;
+    backBot.textContent = s;
+    if (prevVal >= 0 && val !== prevVal) {
+      back.classList.remove('flipping');
+      void back.offsetWidth; // reflow to restart animation
+      back.classList.add('flipping');
+      const onEnd = () => { back.classList.remove('flipping'); back.removeEventListener('animationend', onEnd); };
+      back.addEventListener('animationend', onEnd);
+    }
+  }
+
+  function tick() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    setDigit(fcHTop, fcHBot, fcHBackTop, fcHBackBot, fcHBack, h, prevH);
+    setDigit(fcMTop, fcMBot, fcMBackTop, fcMBackBot, fcMBack, m, prevM);
+    prevH = h;
+    prevM = m;
+  }
+
+  tick();
+  setInterval(tick, 1000);
 })();
   </script>
 </body>
