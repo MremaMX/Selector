@@ -1140,10 +1140,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 14px;
+  gap: 0;
   padding-top: 14px;
-  overflow-y: auto;
-  max-height: 82vh;
+  overflow-y: visible;
+  max-height: 86vh;
 }
 
 .joia-menu-controls {
@@ -1151,9 +1151,9 @@
   gap:10px;
   justify-content:center;
   width:100%;
-  margin-bottom: 6px;
-  position: sticky;
-  top: 0;
+  padding-bottom: 12px;
+  flex-shrink: 0;
+  position: static;
   z-index: 50;
   background: transparent;
 }
@@ -1249,6 +1249,10 @@
 
 .joia-menu-content {
   width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(86vh - 70px);
   display:flex;
   justify-content:center;
   align-items:flex-start;
@@ -1440,27 +1444,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 14px 0 6px;
-  opacity: 0.65;
+  gap: 5px;
+  padding: 14px 0 8px;
+  opacity: 0.75;
   transition: opacity 0.25s ease;
 }
-.flip-clock:hover { opacity: 0.95; }
+.flip-clock:hover { opacity: 1; }
 
 /* Each single-digit card */
 .fc-digit {
   position: relative;
-  width: 36px;
+  width: 40px;
   height: 72px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.45);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.10);
   overflow: hidden;
   perspective: 300px;
 }
 body.dark .fc-digit {
-  background: rgba(28,28,42,0.45);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.25);
+  background: rgba(28,28,42,0.85);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.30);
 }
 
 /* Top half — shows current digit top */
@@ -1471,23 +1475,23 @@ body.dark .fc-digit {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 1px;
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 700;
   font-family: 'Inter', system-ui, monospace;
   color: #1a1a2e;
-  background: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.85);
   border-radius: 8px 8px 0 0;
-  border-bottom: 1.5px solid rgba(0,0,0,0.10);
+  border-bottom: 1.5px solid rgba(0,0,0,0.12);
   overflow: hidden;
   backface-visibility: hidden;
   line-height: 1;
   user-select: none;
+  padding-bottom: 0;
 }
 body.dark .fc-upper {
   color: #dde0ff;
-  background: rgba(28,28,42,0.45);
-  border-bottom-color: rgba(255,255,255,0.07);
+  background: rgba(28,28,42,0.85);
+  border-bottom-color: rgba(255,255,255,0.09);
 }
 
 /* Bottom half — shows previous digit bottom */
@@ -1498,21 +1502,21 @@ body.dark .fc-upper {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 1px;
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 700;
   font-family: 'Inter', system-ui, monospace;
   color: #1a1a2e;
-  background: rgba(235,235,235,0.45);
+  background: rgba(235,235,235,0.85);
   border-radius: 0 0 8px 8px;
   overflow: hidden;
   backface-visibility: hidden;
   line-height: 1;
   user-select: none;
+  padding-top: 0;
 }
 body.dark .fc-lower {
   color: #dde0ff;
-  background: rgba(20,20,34,0.45);
+  background: rgba(20,20,34,0.85);
 }
 
 /* The flipping panel (top half of next digit, folds down) */
@@ -1541,29 +1545,28 @@ body.dark .fc-lower {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 1px;
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 700;
   font-family: 'Inter', system-ui, monospace;
   color: #1a1a2e;
-  background: rgba(255,255,255,0.45);
-  border-bottom: 1.5px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.85);
+  border-bottom: 1.5px solid rgba(0,0,0,0.12);
   line-height: 1;
   user-select: none;
 }
 body.dark .fc-fold-upper {
   color: #dde0ff;
-  background: rgba(28,28,42,0.45);
-  border-bottom-color: rgba(255,255,255,0.07);
+  background: rgba(28,28,42,0.85);
+  border-bottom-color: rgba(255,255,255,0.09);
 }
 
 /* Separator colon */
 .fc-sep {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   font-family: 'Inter', system-ui;
   color: var(--text);
-  opacity: 0.5;
+  opacity: 0.65;
   margin-bottom: 2px;
   line-height: 1;
   user-select: none;
@@ -2077,7 +2080,7 @@ body.dark #grp-place.expanded > .group-header {
 
 /* ===== CUSTOM SCROLLBAR ===== */
 .gallery-wrap, #resultsArea, .filters,
-.joia-menu-shell, .lm-menu-card, .modal, .overlay {
+.joia-menu-shell, .joia-menu-content, .lm-menu-card, .modal, .overlay {
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.18) transparent;
 }
@@ -2085,6 +2088,7 @@ body.dark .gallery-wrap,
 body.dark #resultsArea,
 body.dark .filters,
 body.dark .joia-menu-shell,
+body.dark .joia-menu-content,
 body.dark .lm-menu-card,
 body.dark .modal,
 body.dark .overlay {
@@ -2095,6 +2099,7 @@ body.dark .overlay {
 #resultsArea::-webkit-scrollbar,
 .filters::-webkit-scrollbar,
 .joia-menu-shell::-webkit-scrollbar,
+.joia-menu-content::-webkit-scrollbar,
 .lm-menu-card::-webkit-scrollbar,
 .modal::-webkit-scrollbar,
 .overlay::-webkit-scrollbar {
@@ -2104,6 +2109,7 @@ body.dark .overlay {
 #resultsArea::-webkit-scrollbar-track,
 .filters::-webkit-scrollbar-track,
 .joia-menu-shell::-webkit-scrollbar-track,
+.joia-menu-content::-webkit-scrollbar-track,
 .lm-menu-card::-webkit-scrollbar-track,
 .modal::-webkit-scrollbar-track,
 .overlay::-webkit-scrollbar-track {
@@ -2114,6 +2120,7 @@ body.dark .overlay {
 #resultsArea::-webkit-scrollbar-thumb,
 .filters::-webkit-scrollbar-thumb,
 .joia-menu-shell::-webkit-scrollbar-thumb,
+.joia-menu-content::-webkit-scrollbar-thumb,
 .lm-menu-card::-webkit-scrollbar-thumb,
 .modal::-webkit-scrollbar-thumb,
 .overlay::-webkit-scrollbar-thumb {
@@ -2125,6 +2132,7 @@ body.dark .overlay {
 #resultsArea::-webkit-scrollbar-thumb:hover,
 .filters::-webkit-scrollbar-thumb:hover,
 .joia-menu-shell::-webkit-scrollbar-thumb:hover,
+.joia-menu-content::-webkit-scrollbar-thumb:hover,
 .lm-menu-card::-webkit-scrollbar-thumb:hover,
 .modal::-webkit-scrollbar-thumb:hover,
 .overlay::-webkit-scrollbar-thumb:hover {
@@ -2134,6 +2142,7 @@ body.dark .overlay {
 #resultsArea::-webkit-scrollbar-thumb:active,
 .filters::-webkit-scrollbar-thumb:active,
 .joia-menu-shell::-webkit-scrollbar-thumb:active,
+.joia-menu-content::-webkit-scrollbar-thumb:active,
 .lm-menu-card::-webkit-scrollbar-thumb:active,
 .modal::-webkit-scrollbar-thumb:active,
 .overlay::-webkit-scrollbar-thumb:active {
@@ -2143,6 +2152,7 @@ body.dark .gallery-wrap::-webkit-scrollbar-thumb,
 body.dark #resultsArea::-webkit-scrollbar-thumb,
 body.dark .filters::-webkit-scrollbar-thumb,
 body.dark .joia-menu-shell::-webkit-scrollbar-thumb,
+body.dark .joia-menu-content::-webkit-scrollbar-thumb,
 body.dark .lm-menu-card::-webkit-scrollbar-thumb,
 body.dark .modal::-webkit-scrollbar-thumb,
 body.dark .overlay::-webkit-scrollbar-thumb {
@@ -2152,6 +2162,7 @@ body.dark .gallery-wrap::-webkit-scrollbar-thumb:hover,
 body.dark #resultsArea::-webkit-scrollbar-thumb:hover,
 body.dark .filters::-webkit-scrollbar-thumb:hover,
 body.dark .joia-menu-shell::-webkit-scrollbar-thumb:hover,
+body.dark .joia-menu-content::-webkit-scrollbar-thumb:hover,
 body.dark .lm-menu-card::-webkit-scrollbar-thumb:hover,
 body.dark .modal::-webkit-scrollbar-thumb:hover,
 body.dark .overlay::-webkit-scrollbar-thumb:hover {
@@ -2161,6 +2172,7 @@ body.dark .gallery-wrap::-webkit-scrollbar-thumb:active,
 body.dark #resultsArea::-webkit-scrollbar-thumb:active,
 body.dark .filters::-webkit-scrollbar-thumb:active,
 body.dark .joia-menu-shell::-webkit-scrollbar-thumb:active,
+body.dark .joia-menu-content::-webkit-scrollbar-thumb:active,
 body.dark .lm-menu-card::-webkit-scrollbar-thumb:active,
 body.dark .modal::-webkit-scrollbar-thumb:active,
 body.dark .overlay::-webkit-scrollbar-thumb:active {
