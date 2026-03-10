@@ -1179,7 +1179,8 @@
   /* Default: ESTÁNDAR (aqua) */
   background: linear-gradient(135deg, #2AA59E, #1d8c86);
   box-shadow: 0 4px 14px rgba(42, 165, 158, 0.45), 0 2px 6px rgba(42, 165, 158, 0.25);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  transition: background 0.38s ease, box-shadow 0.38s ease;
+  transform: none !important;
 }
 
 .joia-diet-toggle-state {
@@ -1202,7 +1203,7 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 2px 6px rgba(0,0,0,0.20);
-  transition: left 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+  transition: left 0.38s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   z-index: 2;
   pointer-events: none;
   flex-shrink: 0;
@@ -1441,25 +1442,25 @@
   justify-content: center;
   gap: 4px;
   padding: 14px 0 6px;
-  opacity: 0.55;
+  opacity: 0.65;
   transition: opacity 0.25s ease;
 }
-.flip-clock:hover { opacity: 0.90; }
+.flip-clock:hover { opacity: 0.95; }
 
 /* Each single-digit card */
 .fc-digit {
   position: relative;
   width: 36px;
-  height: 52px;
-  border-radius: 7px;
-  background: rgba(255,255,255,0.82);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.13), 0 1px 3px rgba(0,0,0,0.08);
+  height: 72px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.45);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.10);
   overflow: hidden;
-  perspective: 200px;
+  perspective: 300px;
 }
 body.dark .fc-digit {
-  background: rgba(28,28,42,0.82);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.25);
+  background: rgba(28,28,42,0.45);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.25);
 }
 
 /* Top half — shows current digit top */
@@ -1471,13 +1472,13 @@ body.dark .fc-digit {
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 1px;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 700;
   font-family: 'Inter', system-ui, monospace;
   color: #1a1a2e;
-  background: rgba(255,255,255,0.82);
-  border-radius: 7px 7px 0 0;
-  border-bottom: 1.5px solid rgba(0,0,0,0.09);
+  background: rgba(255,255,255,0.45);
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1.5px solid rgba(0,0,0,0.10);
   overflow: hidden;
   backface-visibility: hidden;
   line-height: 1;
@@ -1485,7 +1486,7 @@ body.dark .fc-digit {
 }
 body.dark .fc-upper {
   color: #dde0ff;
-  background: rgba(28,28,42,0.82);
+  background: rgba(28,28,42,0.45);
   border-bottom-color: rgba(255,255,255,0.07);
 }
 
@@ -1498,12 +1499,12 @@ body.dark .fc-upper {
   align-items: flex-start;
   justify-content: center;
   padding-top: 1px;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 700;
   font-family: 'Inter', system-ui, monospace;
   color: #1a1a2e;
-  background: rgba(242,242,242,0.82);
-  border-radius: 0 0 7px 7px;
+  background: rgba(235,235,235,0.45);
+  border-radius: 0 0 8px 8px;
   overflow: hidden;
   backface-visibility: hidden;
   line-height: 1;
@@ -1511,7 +1512,7 @@ body.dark .fc-upper {
 }
 body.dark .fc-lower {
   color: #dde0ff;
-  background: rgba(20,20,34,0.82);
+  background: rgba(20,20,34,0.45);
 }
 
 /* The flipping panel (top half of next digit, folds down) */
@@ -1522,7 +1523,7 @@ body.dark .fc-lower {
   transform-origin: bottom center;
   transform: rotateX(0deg);
   backface-visibility: hidden;
-  border-radius: 7px 7px 0 0;
+  border-radius: 8px 8px 0 0;
   overflow: hidden;
   z-index: 3;
 }
@@ -1541,18 +1542,18 @@ body.dark .fc-lower {
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 1px;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 700;
   font-family: 'Inter', system-ui, monospace;
   color: #1a1a2e;
-  background: rgba(255,255,255,0.82);
-  border-bottom: 1.5px solid rgba(0,0,0,0.09);
+  background: rgba(255,255,255,0.45);
+  border-bottom: 1.5px solid rgba(0,0,0,0.10);
   line-height: 1;
   user-select: none;
 }
 body.dark .fc-fold-upper {
   color: #dde0ff;
-  background: rgba(28,28,42,0.82);
+  background: rgba(28,28,42,0.45);
   border-bottom-color: rgba(255,255,255,0.07);
 }
 
@@ -1763,24 +1764,28 @@ body.dark .msg-gen-btn.active {
 
 .msg-gen-copy-btn {
   width: 100%;
-  padding: 13px 20px;
+  padding: 11px 20px;
   border-radius: 50px;
   cursor: pointer;
   border: none;
-  background-color: #5EEDDE;
+  background: #5EEDDE;
   color: #000;
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(94,237,222,0.3);
-  transition: all 0.5s ease;
+  letter-spacing: 1px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   position: relative;
-  isolation: isolate;
+  overflow: hidden;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 8px 16px -4px rgba(94,237,222,0.45),
+    inset 0 -2px 3px -1px rgba(0,0,0,0.10),
+    0 -4px 8px -1px rgba(255,255,255,0.5),
+    inset 0 2px 3px -1px rgba(255,255,255,0.25),
+    inset 0 0 4px 1px rgba(255,255,255,0.6);
 }
 
 .msg-gen-copy-btn::before {
@@ -1799,85 +1804,26 @@ body.dark .msg-gen-btn.active {
 }
 
 .msg-gen-copy-btn:hover {
-  letter-spacing: 3px;
-  background-color: #3dd4c8;
-  color: #000;
-  box-shadow: 0 7px 29px rgba(94,237,222,0.6);
+  background: #3dd4c8;
   transform: translateY(-2px);
+  box-shadow:
+    0 12px 24px -4px rgba(94,237,222,0.6),
+    inset 0 -2px 3px -1px rgba(0,0,0,0.10),
+    0 0 18px 4px rgba(94,237,222,0.30),
+    inset 0 2px 3px -1px rgba(255,255,255,0.25),
+    inset 0 0 4px 1px rgba(255,255,255,0.6);
 }
 
 .msg-gen-copy-btn:active {
-  letter-spacing: 3px;
-  background-color: #3dd4c8;
-  color: #000;
-  box-shadow: 0 0 0 0px rgba(94,237,222,0.4);
-  transform: translateY(8px);
-  transition: 100ms;
-}
-
-/* ===== COPY BTN: ROTATING BORDER ===== */
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.msg-gen-copy-btn::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 52px;
-  background: conic-gradient(
-    from var(--angle, 0deg),
-    #5EEDDE, #14B8A6, #38bdf8, #5EEDDE
-  );
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.msg-gen-copy-btn:hover::after {
-  opacity: 1;
-  animation: copy-btn-rotate-border 2s linear infinite;
-}
-
-@keyframes copy-btn-rotate-border {
-  to { --angle: 360deg; }
-}
-
-/* ===== COPY BTN: WAVE LETTERS ===== */
-.msg-gen-copy-btn .wave-letter {
-  display: inline-block;
-  transition: transform 0.1s ease;
-}
-
-.msg-gen-copy-btn:hover .wave-letter {
-  animation: copy-btn-wave-up 0.6s ease infinite alternate;
-}
-
-.msg-gen-copy-btn:hover .wave-letter:nth-child(1)  { animation-delay: 0.00s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(2)  { animation-delay: 0.05s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(3)  { animation-delay: 0.10s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(4)  { animation-delay: 0.15s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(5)  { animation-delay: 0.20s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(6)  { animation-delay: 0.25s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(7)  { animation-delay: 0.30s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(8)  { animation-delay: 0.35s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(9)  { animation-delay: 0.40s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(10) { animation-delay: 0.45s; }
-.msg-gen-copy-btn:hover .wave-letter:nth-child(n+11) { animation-delay: 0.50s; }
-
-@keyframes copy-btn-wave-up {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-4px); }
+  transform: scale(0.95);
+  box-shadow: 0 4px 10px -4px rgba(94,237,222,0.4);
 }
 
 /* ===== COPY BTN: SENT STATE ===== */
 .msg-gen-copy-btn.sent {
-  background-color: #10b981 !important;
+  background: #10b981 !important;
   color: #fff !important;
-  letter-spacing: 1.5px !important;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 4px 20px rgba(16,185,129,0.5) !important;
   pointer-events: none;
 }
 
@@ -2130,57 +2076,94 @@ body.dark #grp-place.expanded > .group-header {
 }
 
 /* ===== CUSTOM SCROLLBAR ===== */
-.gallery-wrap, #resultsArea, .filters {
+.gallery-wrap, #resultsArea, .filters,
+.joia-menu-shell, .lm-menu-card, .modal, .overlay {
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.18) transparent;
 }
 body.dark .gallery-wrap,
 body.dark #resultsArea,
-body.dark .filters {
+body.dark .filters,
+body.dark .joia-menu-shell,
+body.dark .lm-menu-card,
+body.dark .modal,
+body.dark .overlay {
   scrollbar-color: rgba(255,255,255,0.18) transparent;
 }
 
 .gallery-wrap::-webkit-scrollbar,
 #resultsArea::-webkit-scrollbar,
-.filters::-webkit-scrollbar {
+.filters::-webkit-scrollbar,
+.joia-menu-shell::-webkit-scrollbar,
+.lm-menu-card::-webkit-scrollbar,
+.modal::-webkit-scrollbar,
+.overlay::-webkit-scrollbar {
   width: 5px;
 }
 .gallery-wrap::-webkit-scrollbar-track,
 #resultsArea::-webkit-scrollbar-track,
-.filters::-webkit-scrollbar-track {
+.filters::-webkit-scrollbar-track,
+.joia-menu-shell::-webkit-scrollbar-track,
+.lm-menu-card::-webkit-scrollbar-track,
+.modal::-webkit-scrollbar-track,
+.overlay::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 999px;
 }
 .gallery-wrap::-webkit-scrollbar-thumb,
 #resultsArea::-webkit-scrollbar-thumb,
-.filters::-webkit-scrollbar-thumb {
+.filters::-webkit-scrollbar-thumb,
+.joia-menu-shell::-webkit-scrollbar-thumb,
+.lm-menu-card::-webkit-scrollbar-thumb,
+.modal::-webkit-scrollbar-thumb,
+.overlay::-webkit-scrollbar-thumb {
   background: rgba(0,0,0,0.18);
   border-radius: 999px;
   transition: background .15s ease;
 }
 .gallery-wrap::-webkit-scrollbar-thumb:hover,
 #resultsArea::-webkit-scrollbar-thumb:hover,
-.filters::-webkit-scrollbar-thumb:hover {
+.filters::-webkit-scrollbar-thumb:hover,
+.joia-menu-shell::-webkit-scrollbar-thumb:hover,
+.lm-menu-card::-webkit-scrollbar-thumb:hover,
+.modal::-webkit-scrollbar-thumb:hover,
+.overlay::-webkit-scrollbar-thumb:hover {
   background: rgba(0,0,0,0.38);
 }
 .gallery-wrap::-webkit-scrollbar-thumb:active,
 #resultsArea::-webkit-scrollbar-thumb:active,
-.filters::-webkit-scrollbar-thumb:active {
+.filters::-webkit-scrollbar-thumb:active,
+.joia-menu-shell::-webkit-scrollbar-thumb:active,
+.lm-menu-card::-webkit-scrollbar-thumb:active,
+.modal::-webkit-scrollbar-thumb:active,
+.overlay::-webkit-scrollbar-thumb:active {
   background: rgba(99,102,241,0.7);
 }
 body.dark .gallery-wrap::-webkit-scrollbar-thumb,
 body.dark #resultsArea::-webkit-scrollbar-thumb,
-body.dark .filters::-webkit-scrollbar-thumb {
+body.dark .filters::-webkit-scrollbar-thumb,
+body.dark .joia-menu-shell::-webkit-scrollbar-thumb,
+body.dark .lm-menu-card::-webkit-scrollbar-thumb,
+body.dark .modal::-webkit-scrollbar-thumb,
+body.dark .overlay::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.18);
 }
 body.dark .gallery-wrap::-webkit-scrollbar-thumb:hover,
 body.dark #resultsArea::-webkit-scrollbar-thumb:hover,
-body.dark .filters::-webkit-scrollbar-thumb:hover {
+body.dark .filters::-webkit-scrollbar-thumb:hover,
+body.dark .joia-menu-shell::-webkit-scrollbar-thumb:hover,
+body.dark .lm-menu-card::-webkit-scrollbar-thumb:hover,
+body.dark .modal::-webkit-scrollbar-thumb:hover,
+body.dark .overlay::-webkit-scrollbar-thumb:hover {
   background: rgba(255,255,255,0.38);
 }
 body.dark .gallery-wrap::-webkit-scrollbar-thumb:active,
 body.dark #resultsArea::-webkit-scrollbar-thumb:active,
-body.dark .filters::-webkit-scrollbar-thumb:active {
+body.dark .filters::-webkit-scrollbar-thumb:active,
+body.dark .joia-menu-shell::-webkit-scrollbar-thumb:active,
+body.dark .lm-menu-card::-webkit-scrollbar-thumb:active,
+body.dark .modal::-webkit-scrollbar-thumb:active,
+body.dark .overlay::-webkit-scrollbar-thumb:active {
   background: rgba(99,102,241,0.8);
 }
 /* === SPOTLIGHT HOVER EFFECT: all interactive elements === */
@@ -2523,7 +2506,7 @@ body.dark .filter-group-card {
                 <rect x="9" y="2" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
-              Copiar Mensaje
+              Copiar
             </button>
           </div>
         </div> <!-- ✅ CIERRE DE .body -->
@@ -4178,15 +4161,14 @@ body.dark .filter-group-card {
   function copyMessage() {
     const message = generateMessage();
     const btn = document.getElementById('copyMessageBtn');
+    const defaultHTML = btn ? btn.innerHTML : '';
     function showSent() {
       if (!btn) return;
-      const savedNodes = Array.from(btn.childNodes).map(n => n.cloneNode(true));
       btn.classList.add('sent');
       btn.textContent = '✓ ¡Copiado!';
       setTimeout(() => {
         btn.classList.remove('sent');
-        btn.textContent = '';
-        savedNodes.forEach(n => btn.appendChild(n));
+        btn.innerHTML = defaultHTML;
       }, 1800);
     }
     navigator.clipboard.writeText(message).then(() => {
@@ -4269,25 +4251,6 @@ body.dark .filter-group-card {
       });
     });
 
-    // Botón copiar — wrap letters in wave-letter spans
-    if (copyBtn) {
-      const textNodes = Array.from(copyBtn.childNodes).filter(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
-      textNodes.forEach(textNode => {
-        const text = textNode.textContent.trim().replace(/\s+/g, ' ');
-        const frag = document.createDocumentFragment();
-        for (const ch of text) {
-          if (ch === ' ') {
-            frag.appendChild(document.createTextNode(' '));
-          } else {
-            const span = document.createElement('span');
-            span.className = 'wave-letter';
-            span.textContent = ch;
-            frag.appendChild(span);
-          }
-        }
-        copyBtn.replaceChild(frag, textNode);
-      });
-    }
     copyBtn.addEventListener('click', copyMessage);
   });
 
