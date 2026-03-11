@@ -2392,25 +2392,8 @@ body.dark .filter-group-card {
             <div class="msg-gen-section">
               <label class="msg-gen-label">Representante</label>
               <div class="msg-gen-buttons" id="representativeButtons">
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Montserrat Rangel">MONTSERRAT</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Delfino Hernández">DELFINO</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Edgar Madrid">EDGAR</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Clara de la Cruz">CLARA</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Emanuel Hernández">EMANUEL</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Rosario Arriaga">ROSARIO</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Angélica Rivera">ANGÉLICA</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Daniel Martinez">DANIEL</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Gustavo Bolaina">GUSTAVO</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Arturo Mixcoatl">ARTURO</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Alberto">ALBERTO</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Gisela Zempoaltécatl">GISELA Z.</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Ethan López">ETHAN</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Omar Alonso">OMAR</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Gisela Monserrat">GISELA M.</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Javier Carballo">JAVIER</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Raúl Torres">RAÚL</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Arlette Montaño">ARLETTE</button>
-                <button class="msg-gen-btn msg-gen-btn-small" data-rep="Cynthia Turijan">CYNTHIA</button>
+                <!-- Se cargan dinámicamente desde Google Sheets -->
+                <span id="repLoading" style="font-size:11px;color:var(--text);opacity:0.6;padding:4px 8px;">Cargando...</span>
               </div>
             </div>
 
@@ -4129,6 +4112,76 @@ body.dark .filter-group-card {
   }
 
   // Event listeners
+  // ===== CARGAR REPRESENTANTES DINÁMICAMENTE =====
+  function crearBotonRep(rep, container) {
+    var btn = document.createElement('button');
+    btn.className = 'msg-gen-btn msg-gen-btn-small';
+    btn.setAttribute('data-rep', rep.nombre);
+    btn.textContent = rep.etiqueta;
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('[data-rep]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.representative = btn.dataset.rep;
+    });
+    return btn;
+  }
+
+  function cargarRepresentantes() {
+    var container = document.getElementById('representativeButtons');
+    if (!container) return;
+
+    if (typeof google !== 'undefined' && google.script && google.script.run) {
+      google.script.run
+        .withSuccessHandler(function(reps) {
+          container.innerHTML = '';
+          if (!reps || reps.length === 0) {
+            cargarRepresentantesFallback();
+            return;
+          }
+          reps.forEach(function(rep) {
+            container.appendChild(crearBotonRep(rep, container));
+          });
+        })
+        .withFailureHandler(function(err) {
+          console.warn('getRepresentantes falló, usando fallback:', err);
+          cargarRepresentantesFallback();
+        })
+        .getRepresentantes();
+    } else {
+      cargarRepresentantesFallback();
+    }
+  }
+
+  function cargarRepresentantesFallback() {
+    var fallback = [
+      { nombre: 'Montserrat Rangel', etiqueta: 'MONTSERRAT' },
+      { nombre: 'Delfino Hernández', etiqueta: 'DELFINO' },
+      { nombre: 'Edgar Madrid', etiqueta: 'EDGAR' },
+      { nombre: 'Clara de la Cruz', etiqueta: 'CLARA' },
+      { nombre: 'Emanuel Hernández', etiqueta: 'EMANUEL' },
+      { nombre: 'Rosario Arriaga', etiqueta: 'ROSARIO' },
+      { nombre: 'Angélica Rivera', etiqueta: 'ANGÉLICA' },
+      { nombre: 'Daniel Martinez', etiqueta: 'DANIEL' },
+      { nombre: 'Gustavo Bolaina', etiqueta: 'GUSTAVO' },
+      { nombre: 'Arturo Mixcoatl', etiqueta: 'ARTURO' },
+      { nombre: 'Alberto', etiqueta: 'ALBERTO' },
+      { nombre: 'Gisela Zempoaltécatl', etiqueta: 'GISELA Z.' },
+      { nombre: 'Ethan López', etiqueta: 'ETHAN' },
+      { nombre: 'Omar Alonso', etiqueta: 'OMAR' },
+      { nombre: 'Gisela Monserrat', etiqueta: 'GISELA M.' },
+      { nombre: 'Javier Carballo', etiqueta: 'JAVIER' },
+      { nombre: 'Raúl Torres', etiqueta: 'RAÚL' },
+      { nombre: 'Arlette Montaño', etiqueta: 'ARLETTE' },
+      { nombre: 'Cynthia Turijan', etiqueta: 'CYNTHIA' }
+    ];
+    var container = document.getElementById('representativeButtons');
+    if (!container) return;
+    container.innerHTML = '';
+    fallback.forEach(function(rep) {
+      container.appendChild(crearBotonRep(rep, container));
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     const lastNameInput = document.getElementById('lastNameInput');
     const copyBtn = document.getElementById('copyMessageBtn');
@@ -4166,14 +4219,8 @@ body.dark .filter-group-card {
       });
     });
 
-    // Botones de representante
-    document.querySelectorAll('[data-rep]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('[data-rep]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.representative = btn.dataset.rep;
-      });
-    });
+    // Botones de representante (cargados dinámicamente)
+    cargarRepresentantes();
 
     copyBtn.addEventListener('click', copyMessage);
   });
