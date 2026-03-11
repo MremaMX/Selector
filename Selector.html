@@ -2016,14 +2016,43 @@ body.dark #grp-place.expanded > .group-header {
 
 /* ===== POPUP ANIMATION para imágenes en modal ===== */
 @keyframes popIn {
-  0%   { transform: scale(0.88) translateY(18px); opacity: 0; }
-  60%  { transform: scale(1.03) translateY(-3px); opacity: 1; }
+  0%   { transform: scale(0.60) translateY(24px); opacity: 0; }
+  65%  { transform: scale(1.04) translateY(-4px); opacity: 1; }
   100% { transform: scale(1)    translateY(0px);  opacity: 1; }
 }
 .modal .menu-image,
 .modal .card .menu-image {
   animation: popIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   animation-play-state: paused;
+}
+
+/* ===== GLOBAL TOOLTIP (igual a .toggle-tooltip) ===== */
+.ui-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.88);
+  transform-origin: bottom center;
+  background: rgba(20,20,30,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+  letter-spacing: 0.01em;
+}
+
+.ui-tooltip.visible {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
 }
 
 /* ===== SEARCH INPUT ===== */
@@ -4526,6 +4555,43 @@ body.dark .filter-group-card {
   // Valores iniciales
   applyDarkness(darknessSlider.value);
   applyBlur(blurSlider.value);
+})();
+
+// ===== GLOBAL TOOLTIPS =====
+(function initGlobalTooltips() {
+  const SKIP_SELECTORS = '#toggleMsgGen, [data-no-tooltip]';
+
+  function createTooltip(el, text) {
+    const tip = document.createElement('div');
+    tip.className = 'ui-tooltip';
+    tip.textContent = text;
+    tip.setAttribute('role', 'tooltip');
+    tip.setAttribute('aria-hidden', 'true');
+
+    const pos = getComputedStyle(el).position;
+    if (pos === 'static') el.style.position = 'relative';
+    el.appendChild(tip);
+
+    // Remove native tooltip to avoid double tooltip
+    el.dataset.titleBackup = el.getAttribute('title') || '';
+    el.removeAttribute('title');
+
+    el.addEventListener('mouseenter', () => tip.classList.add('visible'));
+    el.addEventListener('mouseleave', () => tip.classList.remove('visible'));
+    el.addEventListener('focusin',    () => tip.classList.add('visible'));
+    el.addEventListener('focusout',   () => tip.classList.remove('visible'));
+  }
+
+  // Wait for DOM to be fully painted
+  requestAnimationFrame(() => {
+    document.querySelectorAll('[title]').forEach(el => {
+      if (el.closest(SKIP_SELECTORS)) return;
+      if (el.querySelector('.toggle-tooltip, .ui-tooltip')) return;
+      const text = el.getAttribute('title');
+      if (!text || !text.trim()) return;
+      createTooltip(el, text.trim());
+    });
+  });
 })();
 
   </script>
