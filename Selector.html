@@ -1263,6 +1263,35 @@
   box-shadow: none !important;
 }
 
+/* ========== LINDO & MAYA MENU SHELL ========== */
+.lm-menu-shell {
+  width: min(96vw, 1080px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding-top: 14px;
+  overflow: hidden;
+  max-height: 86vh;
+  height: 86vh;
+}
+
+.lm-menu-content {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .joia-menu-grid {
   display:flex;
   gap:22px;
@@ -1343,7 +1372,7 @@
 /* ========== LINDO & MAYA MENU - MODIFICADO ========== */
 .lm-menu-card {
   gap: 24px !important;
-  padding: 30px 16px !important;
+  padding: 0 16px !important;
   align-items: flex-start !important;
   justify-content: center !important;
   width: min(96vw, 1060px);
@@ -1949,7 +1978,7 @@ body.dark #grp-place.expanded > .group-header {
 
 /* ===== CUSTOM SCROLLBAR ===== */
 .gallery-wrap, #resultsArea, .filters,
-.joia-menu-shell, .joia-menu-content, .lm-menu-card, .modal, .overlay {
+.joia-menu-shell, .joia-menu-content, .lm-menu-shell, .lm-menu-content, .lm-menu-card, .modal, .overlay {
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.18) transparent;
 }
@@ -1958,6 +1987,8 @@ body.dark #resultsArea,
 body.dark .filters,
 body.dark .joia-menu-shell,
 body.dark .joia-menu-content,
+body.dark .lm-menu-shell,
+body.dark .lm-menu-content,
 body.dark .lm-menu-card,
 body.dark .modal,
 body.dark .overlay {
@@ -1969,6 +2000,8 @@ body.dark .overlay {
 .filters::-webkit-scrollbar,
 .joia-menu-shell::-webkit-scrollbar,
 .joia-menu-content::-webkit-scrollbar,
+.lm-menu-shell::-webkit-scrollbar,
+.lm-menu-content::-webkit-scrollbar,
 .lm-menu-card::-webkit-scrollbar,
 .modal::-webkit-scrollbar,
 .overlay::-webkit-scrollbar {
@@ -1979,6 +2012,8 @@ body.dark .overlay {
 .filters::-webkit-scrollbar-track,
 .joia-menu-shell::-webkit-scrollbar-track,
 .joia-menu-content::-webkit-scrollbar-track,
+.lm-menu-shell::-webkit-scrollbar-track,
+.lm-menu-content::-webkit-scrollbar-track,
 .lm-menu-card::-webkit-scrollbar-track,
 .modal::-webkit-scrollbar-track,
 .overlay::-webkit-scrollbar-track {
@@ -1990,6 +2025,8 @@ body.dark .overlay {
 .filters::-webkit-scrollbar-thumb,
 .joia-menu-shell::-webkit-scrollbar-thumb,
 .joia-menu-content::-webkit-scrollbar-thumb,
+.lm-menu-shell::-webkit-scrollbar-thumb,
+.lm-menu-content::-webkit-scrollbar-thumb,
 .lm-menu-card::-webkit-scrollbar-thumb,
 .modal::-webkit-scrollbar-thumb,
 .overlay::-webkit-scrollbar-thumb {
@@ -2002,6 +2039,8 @@ body.dark .overlay {
 .filters::-webkit-scrollbar-thumb:hover,
 .joia-menu-shell::-webkit-scrollbar-thumb:hover,
 .joia-menu-content::-webkit-scrollbar-thumb:hover,
+.lm-menu-shell::-webkit-scrollbar-thumb:hover,
+.lm-menu-content::-webkit-scrollbar-thumb:hover,
 .lm-menu-card::-webkit-scrollbar-thumb:hover,
 .modal::-webkit-scrollbar-thumb:hover,
 .overlay::-webkit-scrollbar-thumb:hover {
@@ -2012,6 +2051,8 @@ body.dark .overlay {
 .filters::-webkit-scrollbar-thumb:active,
 .joia-menu-shell::-webkit-scrollbar-thumb:active,
 .joia-menu-content::-webkit-scrollbar-thumb:active,
+.lm-menu-shell::-webkit-scrollbar-thumb:active,
+.lm-menu-content::-webkit-scrollbar-thumb:active,
 .lm-menu-card::-webkit-scrollbar-thumb:active,
 .modal::-webkit-scrollbar-thumb:active,
 .overlay::-webkit-scrollbar-thumb:active {
@@ -2022,6 +2063,8 @@ body.dark #resultsArea::-webkit-scrollbar-thumb,
 body.dark .filters::-webkit-scrollbar-thumb,
 body.dark .joia-menu-shell::-webkit-scrollbar-thumb,
 body.dark .joia-menu-content::-webkit-scrollbar-thumb,
+body.dark .lm-menu-shell::-webkit-scrollbar-thumb,
+body.dark .lm-menu-content::-webkit-scrollbar-thumb,
 body.dark .lm-menu-card::-webkit-scrollbar-thumb,
 body.dark .modal::-webkit-scrollbar-thumb,
 body.dark .overlay::-webkit-scrollbar-thumb {
@@ -2032,6 +2075,8 @@ body.dark #resultsArea::-webkit-scrollbar-thumb:hover,
 body.dark .filters::-webkit-scrollbar-thumb:hover,
 body.dark .joia-menu-shell::-webkit-scrollbar-thumb:hover,
 body.dark .joia-menu-content::-webkit-scrollbar-thumb:hover,
+body.dark .lm-menu-shell::-webkit-scrollbar-thumb:hover,
+body.dark .lm-menu-content::-webkit-scrollbar-thumb:hover,
 body.dark .lm-menu-card::-webkit-scrollbar-thumb:hover,
 body.dark .modal::-webkit-scrollbar-thumb:hover,
 body.dark .overlay::-webkit-scrollbar-thumb:hover {
@@ -2042,6 +2087,8 @@ body.dark #resultsArea::-webkit-scrollbar-thumb:active,
 body.dark .filters::-webkit-scrollbar-thumb:active,
 body.dark .joia-menu-shell::-webkit-scrollbar-thumb:active,
 body.dark .joia-menu-content::-webkit-scrollbar-thumb:active,
+body.dark .lm-menu-shell::-webkit-scrollbar-thumb:active,
+body.dark .lm-menu-content::-webkit-scrollbar-thumb:active,
 body.dark .lm-menu-card::-webkit-scrollbar-thumb:active,
 body.dark .modal::-webkit-scrollbar-thumb:active,
 body.dark .overlay::-webkit-scrollbar-thumb:active {
@@ -3530,6 +3577,13 @@ body.dark .filter-group-card {
 
       modal.innerHTML = ''; modal.classList.remove('show');
 
+      const root = document.createElement('div');
+      root.className = 'lm-menu-shell menu-text-white';
+      root.style.position = 'relative';
+
+      const content = document.createElement('div');
+      content.className = 'lm-menu-content';
+
       const card = document.createElement('div');
       card.className = 'card lm-menu-card menu-text-white';
 
@@ -3539,15 +3593,18 @@ body.dark .filter-group-card {
       card.appendChild(esCol);
       card.appendChild(enCol);
 
+      content.appendChild(card);
+      root.appendChild(content);
+
       const lmCloseBtn = document.createElement('button');
       lmCloseBtn.className = 'modal-close-btn';
       lmCloseBtn.innerHTML = '✕';
       lmCloseBtn.title = 'Cerrar menú';
       lmCloseBtn.setAttribute('aria-label', 'Cerrar menú');
       lmCloseBtn.onclick = (e) => { e.stopPropagation(); closeOverlay(); };
-      card.appendChild(lmCloseBtn);
+      root.appendChild(lmCloseBtn);
 
-      modal.appendChild(card);
+      modal.appendChild(root);
       requestAnimationFrame(()=> modal.classList.add('show'));
 
       function esc(e){ if(e.key === 'Escape') closeOverlay(); }
@@ -3555,8 +3612,8 @@ body.dark .filter-group-card {
       overlay._escHandler = esc;
 
       overlay._previousFocus = document.activeElement;
-      card.tabIndex = -1;
-      card.focus();
+      root.tabIndex = -1;
+      root.focus();
     }
 
     function createJoiaMenuColumn(title, images, labels){
