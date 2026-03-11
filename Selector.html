@@ -1976,6 +1976,72 @@ body.dark #grp-place.expanded > .group-header {
   background: rgba(139,92,246,0.12);
 }
 
+/* ===== CARD SPINNER (bolitas orbitando) ===== */
+.card-spinner {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--card-radius);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.card-spinner.loaded {
+  opacity: 0;
+}
+.card-spinner .dot {
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.80);
+  border-radius: 50%;
+  position: absolute;
+  animation: card-orbit 1.1s ease-in-out infinite;
+}
+.card-spinner .dot:nth-child(1) { animation-delay: 0s; }
+.card-spinner .dot:nth-child(2) { animation-delay: 0.22s; }
+.card-spinner .dot:nth-child(3) { animation-delay: 0.44s; }
+
+@keyframes card-orbit {
+  0%   { transform: translate(-13px,  0px); opacity: 0.35; }
+  33%  { transform: translate(  0px,-13px); opacity: 1;    }
+  66%  { transform: translate( 13px,  0px); opacity: 0.35; }
+  100% { transform: translate(-13px,  0px); opacity: 0.35; }
+}
+
+/* ===== SEARCH INPUT ===== */
+.search-input {
+  width: 160px;
+  padding: 7px 14px;
+  font-size: 12px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: var(--text);
+  background-color: rgba(255,255,255,0.85);
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.10);
+  transition: 300ms ease-in-out;
+}
+.search-input:focus {
+  background-color: rgba(255,255,255,0.95);
+  width: 210px;
+  box-shadow: 13px 13px 100px rgba(200,200,220,0.4),
+             -13px -13px 100px rgba(200,200,220,0.4);
+}
+body.dark .search-input {
+  background-color: rgba(30,30,45,0.85);
+  color: #fff;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.35);
+}
+body.dark .search-input:focus {
+  background-color: rgba(40,40,60,0.95);
+  box-shadow: 13px 13px 100px rgba(0,0,0,0.4),
+             -13px -13px 100px rgba(0,0,0,0.4);
+}
+
 /* ===== CUSTOM SCROLLBAR ===== */
 .gallery-wrap, #resultsArea, .filters,
 .joia-menu-shell, .joia-menu-content, .lm-menu-shell, .lm-menu-content, .lm-menu-card, .modal, .overlay {
@@ -2333,6 +2399,13 @@ body.dark .filter-group-card {
                     <button class="sort-btn" id="sortLowHigh" data-sort="low">Menor precio</button>
                   </div>
                 </div>
+                <input
+                  type="text"
+                  id="searchInput"
+                  class="msg-gen-input search-input"
+                  placeholder="Buscar..."
+                  autocomplete="off"
+                />
               </div>
   
           </div>
@@ -2836,7 +2909,8 @@ body.dark .filter-group-card {
       packages: new Set(),
       places: new Set(),
       types: new Set(['ci']),
-      sortOrder: 'high'
+      sortOrder: 'high',
+      searchQuery: ''
     };
 
     const packagesToPlaces = {};
@@ -3193,8 +3267,32 @@ body.dark .filter-group-card {
       img.loading = 'lazy';
       img.src = item.src;
       img.alt = item.title || '';
-      img.onerror = function(){ this.src = PLACEHOLDER_SVG; };
       img.draggable = false;
+
+      // Spinner de bolitas
+      const spinner = document.createElement('div');
+      spinner.className = 'card-spinner';
+      for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        spinner.appendChild(dot);
+      }
+      inner.appendChild(spinner);
+
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.35s ease';
+
+      img.addEventListener('load', function () {
+        spinner.classList.add('loaded');
+        img.style.opacity = '1';
+      }, { once: true });
+
+      img.onerror = function () {
+        this.src = PLACEHOLDER_SVG;
+        spinner.classList.add('loaded');
+        img.style.opacity = '1';
+      };
+
       inner.appendChild(img);
 
       const imageCol = document.createElement('div');
@@ -3294,6 +3392,11 @@ body.dark .filter-group-card {
           if(!ok2) return false;
         }
         if(activeHotelTag && !item.tags.includes(activeHotelTag)) return false;
+        // Filtro de búsqueda por nombre
+        if (state.searchQuery) {
+          const q = state.searchQuery;
+          if (!(item.title || '').toLowerCase().includes(q)) return false;
+        }
         return true;
       });
 
@@ -3916,6 +4019,14 @@ body.dark .filter-group-card {
       }
       sortHighLow.addEventListener('click', () => setSortActive('high'));
       sortLowHigh.addEventListener('click', () => setSortActive('low'));
+
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          state.searchQuery = this.value.trim().toLowerCase();
+          updateResults();
+        });
+      }
 
       // Mousemove radial spotlight effect for all interactive elements
       const SPOTLIGHT_SELECTOR = '.sort-btn, .hotel-btn, .filter-btn, .type-toggle, .group-header, .mode-toggle, #copyMessageBtn, .layout-btn';
