@@ -20,6 +20,10 @@
       --lindo-accent: #2AA59E;
       --joia-accent: #e1ccaa;
 
+      --hotel-r: 218;
+      --hotel-g: 81;
+      --hotel-b: 97;
+
       --text: #111111;
       --muted-text: #111111;
 
@@ -128,6 +132,20 @@
 
     .panel.blurred { filter: blur(7px) saturate(.98) grayscale(.02); transform: scale(.997); }
 
+    .panel::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.4s ease;
+    }
+
     /* ===== LAYOUT CONTROLS ===== */
     .layout-controls {
       display: flex;
@@ -169,7 +187,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(20,184,166,0.26) 0%, rgba(56,189,248,0.12) 50%, transparent 70%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 70%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
@@ -418,6 +436,10 @@
       background: #e1ccaa;
       box-shadow: 0 4px 14px rgba(225, 204, 170, 0.50), 0 2px 6px rgba(225, 204, 170, 0.28);
     }
+    body.dark .hotel-segment .hotel-btn[data-key="joia"].active {
+      background: #e4c59b;
+      box-shadow: 0 4px 14px rgba(228, 197, 155, 0.50), 0 2px 6px rgba(228, 197, 155, 0.28);
+    }
 
     .header-right { display:flex; align-items:center; gap:12px; }
 
@@ -468,6 +490,7 @@
     }
     body.dark .mode-toggle {
       background: #2a2a3a;
+      color: #fff;
       box-shadow: 0 15px 25px -4px rgba(0,0,0,0.7),
                   inset 0 -3px 4px -1px rgba(0,0,0,0.4),
                   0 -10px 15px -1px rgba(80,80,100,0.3),
@@ -487,6 +510,7 @@
       width:20px;height:20px;color:var(--text);
       display:inline-block;
       position:relative;
+      z-index: 1;
     }
     .mode-toggle:focus { outline: 2px solid rgba(0,0,0,0.08); outline-offset:2px; }
     body.dark .mode-toggle .icon { color:#fff; }
@@ -777,7 +801,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(20,184,166,0.28) 0%, rgba(56,189,248,0.12) 50%, transparent 75%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 75%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
@@ -1953,27 +1977,27 @@ body.dark #toggleMsgGen:active {
 
 #grp-package .group-header:hover,
 #grp-place .group-header:hover {
-  border-color: rgba(99,102,241,0.35);
-  background: rgba(99,102,241,0.04);
+  border-color: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.45);
+  background: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.06);
 }
 
 #grp-package.expanded > .group-header,
 #grp-place.expanded > .group-header {
-  border-color: rgba(99,102,241,0.65);
-  background: rgba(99,102,241,0.07);
+  border-color: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.75);
+  background: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.07);
   border-radius: 10px 10px 0 0;
 }
 
 body.dark #grp-package .group-header:hover,
 body.dark #grp-place .group-header:hover {
-  border-color: rgba(139,92,246,0.4);
-  background: rgba(139,92,246,0.07);
+  border-color: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.45);
+  background: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.06);
 }
 
 body.dark #grp-package.expanded > .group-header,
 body.dark #grp-place.expanded > .group-header {
-  border-color: rgba(139,92,246,0.7);
-  background: rgba(139,92,246,0.12);
+  border-color: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.75);
+  background: rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.12);
 }
 
 /* ===== CARD SPINNER (bolitas orbitando) ===== */
@@ -2243,7 +2267,7 @@ body.dark .overlay::-webkit-scrollbar-thumb:active {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(20,184,166,0.30) 0%, rgba(56,189,248,0.14) 50%, transparent 75%);
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 75%);
   opacity: 0;
   transition: opacity .15s ease;
   pointer-events: none;
@@ -4085,6 +4109,10 @@ body.dark .filter-group-card {
         document.documentElement.style.setProperty('--text', '#111111');
         document.documentElement.style.setProperty('--muted-text', '#111111');
       }
+      const rgb = getHotelRgb(activeHotel, dark);
+      document.documentElement.style.setProperty('--hotel-r', rgb.r);
+      document.documentElement.style.setProperty('--hotel-g', rgb.g);
+      document.documentElement.style.setProperty('--hotel-b', rgb.b);
     }
 
     const HOTEL_MAP = {
@@ -4093,6 +4121,18 @@ body.dark .filter-group-card {
       joia: {accent: getComputedStyle(document.documentElement).getPropertyValue('--joia-accent').trim(), title1: 'IBEROSTAR WAVES', title2: 'JOIA'}
     };
 
+    const HOTEL_RGB = {
+      mar:       { r: 218, g:  81, b:  97 },
+      lindo:     { r:  42, g: 165, b: 158 },
+      joia:      { r: 225, g: 204, b: 170 },
+      joia_dark: { r: 228, g: 197, b: 155 }
+    };
+
+    function getHotelRgb(key, dark) {
+      if (key === 'joia' && dark) return HOTEL_RGB.joia_dark;
+      return HOTEL_RGB[key] || HOTEL_RGB.mar;
+    }
+
     function setActiveHotel(key){
       const seg = document.getElementById('hotelSegment');
       seg.querySelectorAll('.hotel-btn').forEach(b => b.classList.toggle('active', b.dataset.key === key));
@@ -4100,6 +4140,10 @@ body.dark .filter-group-card {
       const m = HOTEL_MAP[key];
       setAccent(m && m.accent ? m.accent : '#da5161');
       siteTitleLine2.textContent = m && m.title2 ? m.title2 : '';
+      const rgb = getHotelRgb(key, document.body.classList.contains('dark'));
+      document.documentElement.style.setProperty('--hotel-r', rgb.r);
+      document.documentElement.style.setProperty('--hotel-g', rgb.g);
+      document.documentElement.style.setProperty('--hotel-b', rgb.b);
       refreshFilterVisibility();
       updateEnabledFilters();
       updateResults();
