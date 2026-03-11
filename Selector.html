@@ -132,18 +132,39 @@
 
     .panel.blurred { filter: blur(7px) saturate(.98) grayscale(.02); transform: scale(.997); }
 
-    .panel::after {
+    .panel::before {
       content: '';
       position: absolute;
-      bottom: -60px;
-      left: -60px;
-      width: 520px;
-      height: 520px;
+      top: -80px;
+      right: -80px;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.22) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.08) 50%, transparent 70%);
+      background: radial-gradient(circle, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.25) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 70%);
       pointer-events: none;
       z-index: 0;
       transition: background 0.4s ease;
+    }
+
+    .panel::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 680px;
+      height: 680px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.42) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.20) 40%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.06) 65%, transparent 78%);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.4s ease;
+    }
+
+    body.dark .panel::before {
+      background: radial-gradient(circle, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.32) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.14) 50%, transparent 70%);
+    }
+    body.dark .panel::after {
+      background: radial-gradient(circle, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.52) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 40%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.09) 65%, transparent 78%);
     }
 
     /* ===== LAYOUT CONTROLS ===== */
@@ -618,6 +639,11 @@
     body.dark .type-toggle.active .knob { background: #fff; }
 
     .gallery-wrap { flex:1 1 auto; display:flex; flex-direction:column; gap:10px; overflow:visible; min-width:420px; min-height:0; position:relative; }
+    #resultsArea {
+      /* 52px fade matches the toolbar height (~44px) with a small buffer for a smooth entry */
+      mask-image: linear-gradient(to bottom, transparent 0px, black 52px, black calc(100% - 52px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 52px, black calc(100% - 52px), transparent 100%);
+    }
     .results-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:18px; padding:8px; align-content:start; isolation: isolate; }
 
     .gallery-item {
