@@ -208,14 +208,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 70%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.14) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.06) 40%, transparent 55%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
       border-radius: inherit;
     }
     body.dark .layout-btn::before {
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, transparent 70%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.06) 40%, transparent 55%);
     }
 
     .layout-btn:hover::before { opacity: 1; }
@@ -640,9 +640,7 @@
 
     .gallery-wrap { flex:1 1 auto; display:flex; flex-direction:column; gap:10px; overflow:visible; min-width:420px; min-height:0; position:relative; }
     #resultsArea {
-      /* 52px fade matches the toolbar height (~44px) with a small buffer for a smooth entry */
-      mask-image: linear-gradient(to bottom, transparent 0px, black 52px, black calc(100% - 52px), transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 52px, black calc(100% - 52px), transparent 100%);
+      /* mask-image is managed dynamically by JS (initResultsAreaFade) */
     }
     .results-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:18px; padding:8px; align-content:start; isolation: isolate; }
 
@@ -829,14 +827,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 75%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.14) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.06) 40%, transparent 55%);
       opacity: 0;
       transition: opacity .15s ease;
       pointer-events: none;
       border-radius: inherit;
     }
     body.dark .sort-btn::before {
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, transparent 75%);
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.06) 40%, transparent 55%);
     }
 
     .sort-btn:hover::before {
@@ -1745,7 +1743,7 @@ body.dark .msg-gen-btn.active {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.35) 0%, transparent 65%);
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.18) 0%, transparent 55%);
   opacity: 0;
   transition: opacity .15s ease;
   pointer-events: none;
@@ -2293,7 +2291,7 @@ body.dark .overlay::-webkit-scrollbar-thumb:active {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.28) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.10) 50%, transparent 75%);
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.14) 0%, rgba(var(--hotel-r), var(--hotel-g), var(--hotel-b), 0.06) 40%, transparent 55%);
   opacity: 0;
   transition: opacity .15s ease;
   pointer-events: none;
@@ -2312,7 +2310,7 @@ body.dark .filter-btn::before,
 body.dark .type-toggle::before,
 body.dark .group-header::before,
 body.dark .mode-toggle::before {
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, transparent 75%);
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.06) 40%, transparent 55%);
 }
 
 /* Make sure text/icons stay above the spotlight layer */
@@ -3584,6 +3582,7 @@ body.dark .filter-group-card {
       const frag = document.createDocumentFragment();
       filtered.forEach(it => frag.appendChild(createGalleryCard(it)));
       resultsGrid.appendChild(frag);
+      window._updateResultsFade && window._updateResultsFade();
     }
 
     async function tryAttachImageFileToDataTransfer(ev, imageUrl, suggestedName = 'image.jpg'){
@@ -4694,6 +4693,34 @@ body.dark .filter-group-card {
       createTooltip(el, text.trim());
     });
   });
+})();
+
+// ===== DYNAMIC FADE FOR #resultsArea BASED ON SCROLL POSITION =====
+(function initResultsAreaFade() {
+  const area = document.getElementById('resultsArea');
+  if (!area) return;
+
+  function updateFade() {
+    const atTop = area.scrollTop <= 2;
+    const atBottom = area.scrollTop + area.clientHeight >= area.scrollHeight - 2;
+
+    let mask;
+    if (atTop && atBottom) {
+      mask = 'none';
+    } else if (atTop) {
+      mask = 'linear-gradient(to bottom, black 0%, black calc(100% - 52px), transparent 100%)';
+    } else if (atBottom) {
+      mask = 'linear-gradient(to bottom, transparent 0px, black 52px, black 100%)';
+    } else {
+      mask = 'linear-gradient(to bottom, transparent 0px, black 52px, black calc(100% - 52px), transparent 100%)';
+    }
+    area.style.maskImage = mask;
+    area.style.webkitMaskImage = mask;
+  }
+
+  area.addEventListener('scroll', updateFade, { passive: true });
+  window.addEventListener('load', updateFade);
+  window._updateResultsFade = updateFade;
 })();
 
   </script>
